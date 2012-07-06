@@ -2,23 +2,38 @@
 \usepackage{array, xcolor, lipsum, bibentry}
 \usepackage[margin=3cm]{geometry}
 
-\usepackage{multirow}
-\usepackage{longtable}
-\usepackage{xargs} % for newcommandx
-\usepackage{xifthen} % for isempty test
+\usepackage{array}
+\usepackage[hidelinks]{hyperref} % for hyperlinks
+\usepackage{multirow} % for table columns that span more than one row
+\usepackage{longtable} % for tables that span more than one page
 \usepackage{tabularx} % for simple column stretching
+\usepackage{xcolor} % for colours
 
-\title{\bfseries\Huge Joshua Spence}
-\author{josh@joshuaspence.com}
+% My details
+\newcommand{\myName}{Joshua Spence}
+\newcommand{\myDOB}{25 January 1990}
+\newcommand{\myEmail}{josh@joshuaspence.com}
+\newcommand{\myMobile}{0422 990 263}
+\newcommand{\myAddress}{6 Parkwood Close \newline Castle Hill NSW 2154}
+\newcommand{\myGithub}{\url{http://github.com/joshuaspence}}
+\newcommand{\myLinkedIn}{\url{http://au.linkedin.com/in/joshuaspence}}
+
+% Title details
+\title{\bfseries\Huge \myName}
+\author{Cirriculum Vitae}
 \date{}
 
+% For table styling
 \newcommand{\lwidth}{0.16\textwidth}
 \newcommand{\rwidth}{0.78\textwidth}
-
 \definecolor{lightgray}{gray}{0.8}
 \newcolumntype{L}{>{\raggedleft}p{\lwidth}}
 \newcolumntype{R}{p{\rwidth}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \professionalExperience{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}
 \newcommand{\professionalExperience}[5]{%
@@ -29,28 +44,47 @@
 }
 
 % \education{beginYear}{endYear}{name}{institution}
-\newcommandx{\education}[4]{%
+\newcommand{\education}[4]{%
 #1 -- #2 & {\bf #3 (#4)} \\%
 }
+
+% \achievement{date}{name}{description}
+\newcommand{\achievement}[3]{%
+\multirow{2}{\lwidth}{#1}%
+& {\bf #2} \\%
+& #3 %
+\vspace{5pt} \\%
+}
+
+% \license{name}{provider}{description}
+\newcommand{\license}[3]{#1 & #3 \\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
 % Title
 \maketitle
-\vspace{1em}
-\begin{minipage}[ht]{0.48\textwidth}
-6 Parkwood Close \\
-Castle Hill NSW 2154
-\end{minipage}
-\begin{minipage}[ht]{0.48\textwidth}
-0422 990 263\\
-josh@joshuaspence.com
-\end{minipage}
-\vspace{20pt}
 
 % Objective
 \section*{Objective}
 Find a job.
+
+% Personal details
+\section*{Personal details}
+\begin{longtable}{>{\bfseries}L!{\VRule}R}
+Name & \myName \\
+Date of Birth & \myDOB \\
+Address & \myAddress \\
+
+\vspace{5pt}
+Mobile & \myMobile \\
+
+\vspace{5pt}
+Email & \myEmail \\
+LinkedIn & \myLinkedIn \\
+GitHub & \myGithub \\
+\end{longtable}
 
 % Professional experience
 \section*{Professional Experience}
@@ -197,5 +231,80 @@ UAI & 						99.25
 \end{tabularx}
 
 \end{longtable}
+
+% Skills
+\section*{Skills}
+\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\end{longtable}
+
+% Awards, licenses and qualifications
+\section*{Awards, licenses and qualifications}
+
+\subsection*{Licenses}
+\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\license{Driver License}{RTA}{Class C Driver's License}
+\license{Explosives License}{Workcover NSW}{Pyrotechnician's License (Organised 
+Public Display, Ground display fireworks, Theatrical/indoor fireworks, Aerial 
+shells up to 150 mm)}
+\license{Boat Driver's License}{NSW Maritime}{Boat Driver's License}
+\end{longtable}
+
+\subsection*{Qualifications and Training}
+\begin{longtable}{>{\bfseries}L!{\VRule}R}
+
+\achievement{23 March 2011}{Leadership Training}
+{Participated in an internal leadership training program facilitated by `The 
+Hills Shire Council'.}
+
+\achievement{28 February 2011}{Senior First Aid}
+{Statement of Attainment for fulfilling the requirements of HLTFA301B (Apply 
+First Aid) from the Health Training Package HLT07.}
+
+\achievement{April 2010}{Safety Checking Electrical Appliances}
+{TAFE Statement in Safety Checking Electrical Appliances.}
+
+\achievement{2 December 2008}{Responsible Service of Alcohol}
+{Statement of Attainment for fulfilling the requirements of THHBFB09B (Provide 
+Responsible Service of Alcohol) in partial completion of the Certificate II in 
+Hospitality (Operations) qualification.}
+
+\achievement{26 February 2008}{Turning Shoppers into Buyers}
+{Certificate of achievement for participation in the Jaycar ``Turning Shoppers 
+into Buyers''  Retail Sales Skills training.}
+
+\achievement{5 July 2007}{Defensive Driving}
+{Statement of Completion for completion of the Murcotts Level 1 Defensive 
+Driving Program based on the unit of competence TDTC197B (Drive Vehicle) from 
+the Transport \& Distribution Package TDT02.}
+
+\end{longtable}
+
+\subsection*{Awards and Achievements}
+\begin{longtable}{>{\bfseries}L!{\VRule}R}
+
+\achievement{2008--2010}{Australian Power Institute Bursary}
+{Awarded the Australian Power Institute Power Engineering Bursary. Rejected the 
+bursary for the period 2011 onwards as I decided that this was not a field in 
+which I wanted to pursue a career.}
+
+\achievement{2008--2009}{University of Sydney: Talented Students Program}
+{Admitted to the University of Sydney Talented Student Program, a program 
+designed to make special arrangements which offer an intellectual challenge to 
+elite students while they are studying at the University of Sydney.}
+
+\achievement{2008}{University of Sydney: Advanced Engineering}
+{Admitted to the University of Sydney Advanced Engineering Program, designed to 
+enable high achieving students to work on engineering and IT interdisciplinary
+project during their first semester.
+
+My group was awarded the `Best Project' and `Best Presentation' for our Stirling
+engine project.}
+
+\achievement{2007}{National Youth Science Forum}
+{Was one of six Australian students to be selected to attend the Genesis Science
+\& Technology Summer School in Auckland, New Zealand.}
+
+\end{longtable}
+
 
 \end{document}
