@@ -1,8 +1,8 @@
 \documentclass[10pt]{article}
-\usepackage{array, xcolor, lipsum, bibentry}
-\usepackage[margin=3cm]{geometry}
 
 \usepackage{array}
+\usepackage[margin=3cm]{geometry}
+\usepackage{graphicx} % for graphics
 \usepackage[hidelinks]{hyperref} % for hyperlinks
 \usepackage{multirow} % for table columns that span more than one row
 \usepackage{longtable} % for tables that span more than one page
@@ -10,13 +10,10 @@
 \usepackage{xcolor} % for colours
 
 % My details
-\newcommand{\myName}{Joshua Spence}
-\newcommand{\myDOB}{25 January 1990}
-\newcommand{\myEmail}{josh@joshuaspence.com}
-\newcommand{\myMobile}{0422 990 263}
-\newcommand{\myAddress}{6 Parkwood Close \newline Castle Hill NSW 2154}
-\newcommand{\myGithub}{\url{http://github.com/joshuaspence}}
-\newcommand{\myLinkedIn}{\url{http://au.linkedin.com/in/joshuaspence}}
+\input{MyDetails}
+
+% Graphics directory
+\graphicspath{{./img/}}
 
 % Title details
 \title{\bfseries\Huge \myName}
@@ -31,9 +28,9 @@
 \newcolumntype{R}{p{\rwidth}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CUSTOM MACROS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \professionalExperience{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}
 \newcommand{\professionalExperience}[5]{%
@@ -75,7 +72,7 @@ Find a job.
 \begin{longtable}{>{\bfseries}L!{\VRule}R}
 Name & \myName \\
 Date of Birth & \myDOB \\
-Address & \myAddress \\
+Address & \myAddress{\newline} \\
 
 \vspace{5pt}
 Mobile & \myMobile \\
