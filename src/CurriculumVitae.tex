@@ -1,13 +1,16 @@
 \documentclass[10pt]{article}
 
-\usepackage{array}
-\usepackage[margin=3cm]{geometry}
-\usepackage{graphicx} % for graphics
-\usepackage[hidelinks]{hyperref} % for hyperlinks
-\usepackage{multirow} % for table columns that span more than one row
-\usepackage{longtable} % for tables that span more than one page
-\usepackage{tabularx} % for simple column stretching
-\usepackage{xcolor} % for colours
+\usepackage{enumitem} 				% for tweaking lists
+\usepackage{etoolbox} 				% for \ifstrempty
+\usepackage[margin=3cm]{geometry}	% extend page margins
+\usepackage{graphicx} 				% for graphics
+\usepackage[hidelinks]{hyperref} 	% for hyperlinks
+\usepackage{ifthen}					% for \ifthenelse
+\usepackage{longtable} 				% for tables that span more than one page
+\usepackage{multirow} 				% for table columns that span more than one row
+\usepackage{tabularx} 				% for simple column stretching
+\usepackage{verbatim} 				% for block commenting
+\usepackage{xcolor} 				% for colours
 
 % My details
 \input{MyDetails}
@@ -16,143 +19,341 @@
 \graphicspath{{./img/}}
 
 % Title details
-\title{\bfseries\Huge \myName}
-\author{Cirriculum Vitae}
+\title{\Huge{\bf{\myName}}}
+\author{\Large{\underline{Cirriculum Vitae}}}
 \date{}
 
-% For table styling
-\newcommand{\lwidth}{0.16\textwidth}
-\newcommand{\rwidth}{0.78\textwidth}
-\definecolor{lightgray}{gray}{0.8}
-\newcolumntype{L}{>{\raggedleft}p{\lwidth}}
-\newcolumntype{R}{p{\rwidth}}
-\newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+% Configuration
+\newboolean{showTools}
+\setboolean{showTools}{false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CUSTOM MACROS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \professionalExperience{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}
-\newcommand{\professionalExperience}[5]{%
-\multirow{2}{\lwidth}{#1 -- #2}%
-& {\bf #3 (#4)} \\%
+%================================================%
+% For table styling
+%================================================%
+\definecolor{lightgray}{gray}{0.8}
+\newcolumntype{L}[1]{>{\raggedleft}p{#1\textwidth}}
+\newcolumntype{R}[1]{p{#1\textwidth}}
+\newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+%------------------------------------------------%
+
+%================================================%
+% For comma-separated lists
+%================================================%
+\makeatletter
+\newcommand*\commasep[2][, ]{%
+	\begingroup
+	\def\commasepsep{#1\space}%  store separator e.g. ','
+	\def\commasependsep{\space#2\space}%  store last separator e.g. 'and'
+	\@commasep
+}
+\newcommand*\@commasep[1][.]{%
+	\def\commasepend{#1}%  store end marker e.g. '.'
+	\@ifnextchar\endcommasep{}{%  check for empty list
+		\catcode\endlinechar\active%  make end-of-line active
+		\commasepfirstelement%  read first element
+	}%
+}%
+\begingroup
+\catcode\endlinechar\active%
+% The `~` character represents the end-of-line character in the
+% code below:
+\lccode`\~=\endlinechar%
+\lowercase{%
+% Read first element
+\gdef\commasepfirstelement#1~}{%
+	#1%
+	\@ifnextchar\endcommasep{%
+		\commasepend% remove this if you don't want one with only one element
+	}{%
+		\commasepelement% no comma here!
+	}%
+}%
+\lowercase{%
+\endgroup%
+% Read all other elements
+\gdef\commasepelement#1~}{%
+	\@ifnextchar\endcommasep{% Stop at `\endcommasep`
+		\commasependsep#1\commasepend%
+	}{%
+		\commasepsep#1\commasepelement%
+	}%
+}%
+\def\endcommasep{%
+	\@gobble{endcommasep}% be unique (for `\@ifnextchar`) 
+	\endgroup
+}%
+\makeatother
+%------------------------------------------------%
+
+%================================================%
+% \professionalExperience{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{tools}
+%================================================%
+\newcommand{\professionalExperience}[6]{%
+\multirow{\ifstrempty{#6}{2}{3}}{\lwidth}{#1 -- #2}%
+& {\bf #3 (#4)} \\ %
 & #5 %
-\vspace{5pt} \\%
+\ifthenelse{\boolean{showTools}}%
+{\ifstrempty{#6}%
+{}%
+{\vspace{0.5em} \\ %
+& {\bf Tools:} \newline %
+\begin{itemize}[itemsep=0pt] %
+#6 %
+\end{itemize} %
+}%
+}%
+{}%
+\vspace{1em} \\ %
 }
+%------------------------------------------------%
 
+%================================================%
 % \education{beginYear}{endYear}{name}{institution}
+%================================================%
 \newcommand{\education}[4]{%
-#1 -- #2 & {\bf #3 (#4)} \\%
+#1 -- #2 & {\bf #3 (#4)} \\ %
 }
+%------------------------------------------------%
 
+%================================================%
 % \achievement{date}{name}{description}
+%================================================%
 \newcommand{\achievement}[3]{%
-\multirow{2}{\lwidth}{#1}%
-& {\bf #2} \\%
+\multirow{2}{*}{#1}%
+& {\bf #2} \\ %
 & #3 %
-\vspace{5pt} \\%
+\vspace{1em} \\ %
 }
+%------------------------------------------------%
 
+%================================================%
 % \license{name}{provider}{description}
+%================================================%
 \newcommand{\license}[3]{#1 & #3 \\}
+%------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \maketitle
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Objective
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Objective}
-Find a job.
+To work in a competitive environment that effectively utilizes my analytical, 
+interpersonal, leadership and organizational skills to conceive and achieve 
+solutions. The solutions which help the organization in not only meeting its 
+targets, but also allowing it to grow, thereby, enhancing my own skills as an 
+individual and as a key player in the organization's development.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Personal details
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Personal details}
-\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\begin{tabular}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
 Name & \myName \\
 Date of Birth & \myDOB \\
-Address & \myAddress{\newline} \\
+Address & \myAddress{\newline} \vspace{1em} \\
 
-\vspace{5pt}
-Mobile & \myMobile \\
+Mobile & \myMobile \vspace{1em} \\
 
-\vspace{5pt}
 Email & \myEmail \\
 LinkedIn & \myLinkedIn \\
 GitHub & \myGithub \\
-\end{longtable}
+\end{tabular}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Summary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Summary}
+\begin{itemize}
+\begin{comment}
+	\item Currently working as a \emph{Graduate Software Engineer} at the 
+		``Reserve Bank of Australia''.
+\end{comment}
+	\item Currently working as a \emph{Engineering/Data Analytics Intern} at  
+		``Freelancer.com''.
+	\item Will graduate from the ``University of Sydney'' with a 
+		\emph{Bachelor of Engineering (Computer)} in 2012.
+	\item Will graduate from the ``University of Sydney'' with a 
+		\emph{Bachelor of Science (Computer Science)} in 2012.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Technical Skills
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Technical Skills}
+\begin{tabular}{>{\bfseries}L{0.3}!{\VRule}R{0.64}}
+
+Programming Languages &
+\commasep[,]{and}[.]
+C
+C++
+Java
+Perl
+Python
+\endcommasep \vspace{0.5em} \\
+
+Web-Based Development &
+\commasep[,]{and}[.]
+PHP
+JavaScript
+CSS
+HTML
+\endcommasep \vspace{0.5em} \\
+
+Document markup &
+\commasep[,]{and}[.]
+\LaTeX
+\endcommasep \vspace{0.5em} \\
+
+Databases &
+\commasep[,]{and}[.]
+Oracle
+MySQL
+postgreSQL
+\endcommasep \vspace{0.5em} \\
+
+Operating Systems &
+\commasep[,]{and}[.]
+Microsoft Windows
+Linux
+Solaris
+\endcommasep \vspace{0.5em} \\
+
+Tools &
+\commasep[,]{and}[.]
+Git
+Subversion
+Eclipse IDE
+\endcommasep \vspace{0.5em} \\
+
+\end{tabular}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Professional experience
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Professional Experience}
-\begin{longtable}{L!{\VRule}R}
+\begin{longtable}{L{0.16}!{\VRule}R{0.78}}
+\global\def \lwidth{0.16\textwidth}
+\global\def \rwidth{0.78\textwidth}
 
+% Software Engineering Graduate (Reserve Bank of Australia)
+\begin{comment}
+\professionalExperience{February 2013}{present}
+{Software Engineering Graduate}{Reserve Bank of Australia}
+{TODO}
+{}
+\end{comment}
+
+% Tutor (University of Sydney)
 \professionalExperience{August 2012}{present}
 {Tutor}{University of Sydney}
 {I was a tutor for a first year electrical engineering unit of study, named 
 ``Foundations of Computer Systems'' (ELEC1601). This position involved preparing
 and running three-hour laboratory session with up to 40 students in each 
 session.}
+{}
 
+% Engineering/Data Analytics Intern (Freelancer.com)
 \professionalExperience{July 2012}{present}
 {Engineering/Data Analytics Intern}{Freelancer.com}
 {My job involved assisting in the design and implementation of software for use
 by Freelancer.com. This included working with other staff to establish technical
 specifications, developing the software and performing data analysis techniques 
 to improve key business metrics.}
+{}
 
+% Tutor (University of Sydney)
 \professionalExperience{March 2012}{June 2012}
 {Tutor}{University of Sydney}
 {I was a tutor for a first year electrical engineering unit of study, named 
 ``Fundamentals of Electrical and Electronic Engineering'' (ELEC1103). This 
 position involved preparing and running two-hour tutoring session with up to 40 
 students in each session.}
+{}
 
+% Software Engineering Intern (Broadcom)
 \professionalExperience{November 2011}{February 2012}
 {Software Engineering Intern}{Broadcom}
-{Over the Summer holidays I worked at Broadcom, in their Sydney Office. This 
-position was a great experience for me and helped me to further my experience in
-embedded computing. I was involved in developing the SDK for Broadcom’s WICED 
+{This position was a great experience and allowed me to further my experience in
+embedded computing. I was involved in developing the SDK for Broadcom's WICED 
 module (Wireless Internet Connectivity for Embedded Devices).
 
-I completed two primary tasks during my employment. I ported iperf (network 
-throughput management software) to the WICED development system. In addition, I 
-added the capability to trace thread execution of a Real Time Operating System 
-(RTOS).}
+I completed two primary tasks during my employment. The major task was porting 
+``iperf'' (a network throughput management software) to the WICED development 
+system. In addition, I added the capability to trace thread execution of a Real 
+Time Operating System.}
+{
+\item C
+\item Eclipse IDE
+\item Subversion
+\item ThreadX
+\item NetX
+\item FreeRTOS
+\item LwIP
+% TODO
+}
 
+% System Administrator (Audinate)
 \professionalExperience{April 2011}{July 2012}
 {System Administrator}{Audinate}
-{I have gained a wide range of experience from this role including website 
-administration, Unix administration and designing and building dedicated Unix 
-servers.
-
-In this role I administered various servers running on either Ubuntu Server or 
+{In this role I administered various servers running on either Ubuntu Server or 
 Sun Solaris. I administered various services including LDAP, ZFS (Zettabyte File
 System), IMAP/SMTP (Zimbra) and NFS. I also worked extensively with VMware 
-Server during this role.}
+Server during this role.
 
+Through this position, I have gained a wide range of experience including 
+website administration, Unix administration and designing and building dedicated
+Unix servers.}
+{
+\item Ubuntu Server
+\item Sun Solaris
+\item Zettabyte File System (ZFS)
+\item Zimbra
+% TODO
+}
+
+% Industrial Student (TransGrid)
 \professionalExperience{December 2010}{February 2011}
 {Industrial Student}{TransGrid}
-{Worked in the Projects (Central Region) section as an Industrial Student. Was 
+{In this position, I worked in the `Projects (Central Region)' section. I was 
 involved with various projects including earth grid safety inspections and 
 progress meetings with contractors.
 
-This work experienced was a paid work experience offered as a part of my 
-Australian Power Institute bursary.
+This work experience was a paid work experience offered as a part of my 
+`Australian Power Institute' bursary.
 
 Whilst at TransGrid, I developed a database utility using Microsoft Access and 
 Visual Basic to assist the projects team with managing and tracking project 
 completion. Whilst VBA is not considered a sophisticated programming language, 
 this was an interesting experience in which I was required to write some 
-sophisticated time-based SQL queries.}
+sophisticated temporal SQL queries.}
+{
+\item Microsoft Access
+\item Visual Basic for Applications (VBA)
+\item SQL
+}
 
+% Industrial Student (Australian Energy Market Operator)
 \professionalExperience{December 2009}{February 2010}
 {Industrial Student}{Australian Energy Market Operator}
-{I worked in the Metering \& Settlements team. The team had to deal with large 
-amounts of data existing in SQL tables which are updated hourly based on 
+{I was working in the Metering \& Settlements team. This team had to deal with 
+large amounts of data existing in SQL tables which are updated hourly based on 
 real-time monitoring data.
-This work experienced was a paid work experience offered as a part of my 
-Australian Power Institute bursary.
+
+This work experience was a paid work experience offered as a part of my 
+`Australian Power Institute' bursary.
 
 My main role within the team was working on improving the reliability and 
 accuracy of the operations of the team by designing software-based tools to 
@@ -160,41 +361,56 @@ allow them to monitor and analyse data. I analysed and reconstructed several
 macro-enabled spreadsheets used by the team to perform important calculations. I
 was able to improve the accuracy of the data reported by the spreadsheet and 
 greatly improve the running speeds of the tools.}
+{
+\item Oracle database management system
+\item Visual Basic for Applications (VBA)
+\item SQL
+}
 
+% Industrial Student (Energy Australia)
 \professionalExperience{February 2009}{February 2009}
 {Industrial Student}{Energy Australia}
-{I was involved with the Intelligent Networks division, working on an electrical
-sensing and monitoring system. I was involved with analysing system diagrams and
-attending regular meetings with engineers to discuss implementation details for 
-a smart metering device that was being developed.
+{In this role, I was involved with the `Intelligent Networks' division, working 
+on an electrical sensing and monitoring system. I was involved with analysing 
+system diagrams and attending regular meetings with engineers to discuss 
+implementation details for a smart metering device that was being developed.
 
-This work experienced was a paid work experience offered as a part of my 
-Australian Power Institute bursary.}
+This work experience was a paid work experience offered as a part of my 
+`Australian Power Institute' bursary.}
+{}
 
+% Customer Service Officer (The Hills Shire Council)
 \professionalExperience{January 2009}{present}
 {Customer Service Officer}{The Hills Shire Council}
-{My job involved taking phone calls and handling enquiries regarding the 
+{This role involved taking phone calls and handling enquiries regarding the 
 council's community halls and other related facilities, as well as entering 
 these details into a booking system and handling related activities such as 
 invoicing.
 
-My job also involved completing room set ups and pack downs, as well as 
+My role also involved completing room set ups and pack downs, as well as 
 supervising events taking place in the council facilities.}
+{}
 
+% Chief Pyrotechnician (Howard & Sons Pyrotechnics)
 \professionalExperience{July 2008}{present}
 {Chief Pyrotechnician}{Howard \& Sons Pyrotechnics}
 {I am a licensed pyrotechnician for a world-class pyrotechnics company. As a 
 chief pyrotechnician, I am responsible for many aspects of a pyrotechnics 
-display including liaising with clients, venues and the general public; 
-supervising crew and ensuring that the setup is as safe as possible; monitoring 
-weather conditions and product anomalies during the display which could prevent 
-a hazard to the public or the surroundings; as well as many other 
-responsibilities.
+display, including:
+\begin{itemize}
+	\item Managing the worksite and firing site.
+	\item Managing the loading and unloading of fireworks.
+	\item Dealing directly with clients and suppliers on-site.
+	\item Responsibility for all rostered crew on-site.
+	\item Responsibility for all Workplace Health \& Safety matters on-site.
+\end{itemize}
 
 In addition to my role as a pyrotechnician, I am also a pyrotechnic display 
-designer and am responsible for the planning, mapping and choreography of a 
-pyrotechnics display to a prespecified music soundtrack.}
+designer and am responsible for the planning, designing and choreography of a 
+pyrotechnics display to musical soundtracks.}
+{}
 
+% Managing Director (Abstract Productions)
 \professionalExperience{October 2008}{October 2011}
 {Managing Director}{Abstract Productions}
 {Alongside with a close friend and business partner, I owned and operated my own
@@ -207,18 +423,43 @@ skills with HTML, PHP, CSS, Apache, Unix and MySQL as I was responsible for
 developing and maintaining the business' website. I decided to end my commitment
 to the business as it was the not the field in which I intended to pursue a 
 career.}
+{}
+\begin{comment}
+\item Web development
+\begin{itemize}
+	\item HTML
+	\item PHP
+	\item CSS
+\end{itemize}
+
+\item Web administration
+\begin{itemize}
+	\item Apache
+	\item Unix
+	\item MySQL
+\end{itemize}
+\end{comment}
+
+% we need \makeatletter because \@undefined uses the special @ character.
+\makeatletter
+\global\def \lwidth{\@undefined}
+\global\def \rwidth{\@undefined}
+\makeatother
 
 \end{longtable}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Education
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Education}
-\begin{longtable}{L!{\VRule}R}
+\begin{longtable}{L{0.16}!{\VRule}R{0.78}}
 
 \education{2008}{2012}{Bachelor of Engineering (Computer)}{University of Sydney}
 
 \education{2008}{2012}{Bachelor of Science (Computer Science)}{University of Sydney}
 
 \education{2002}{2007}{Higher School Certificate}{Cherrybrook Technology High School}
-& \begin{tabularx}{\rwidth}{Xr}
+& \begin{tabularx}{0.78\textwidth}{Xr}
 Chemistry &					90/100 \\
 English (Advanced) & 		88/100 \\
 Mathematics Extension 1 &	97/100 \\
@@ -229,16 +470,13 @@ UAI & 						99.25
 
 \end{longtable}
 
-% Skills
-\section*{Skills}
-\begin{longtable}{>{\bfseries}L!{\VRule}R}
-\end{longtable}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Awards, licenses and qualifications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Awards, licenses and qualifications}
 
 \subsection*{Licenses}
-\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
 \license{Driver License}{RTA}{Class C Driver's License}
 \license{Explosives License}{Workcover NSW}{Pyrotechnician's License (Organised 
 Public Display, Ground display fireworks, Theatrical/indoor fireworks, Aerial 
@@ -247,7 +485,7 @@ shells up to 150 mm)}
 \end{longtable}
 
 \subsection*{Qualifications and Training}
-\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
 
 \achievement{23 March 2011}{Leadership Training}
 {Participated in an internal leadership training program facilitated by `The 
@@ -277,7 +515,7 @@ the Transport \& Distribution Package TDT02.}
 \end{longtable}
 
 \subsection*{Awards and Achievements}
-\begin{longtable}{>{\bfseries}L!{\VRule}R}
+\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
 
 \achievement{2008--2010}{Australian Power Institute Bursary}
 {Awarded the Australian Power Institute Power Engineering Bursary. Rejected the 
@@ -303,5 +541,10 @@ engine project.}
 
 \end{longtable}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% References and Referees
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{References and Referees}
+References and referees available on request.
 
 \end{document}
