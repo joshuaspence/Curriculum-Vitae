@@ -1,12 +1,12 @@
 \documentclass[10pt]{article}
 
-%================================================%
-% Includes
-%================================================%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INCLUDES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[l2tabu,orthodox]{nag}
 
 \usepackage{commasep}				% for comma-separated lists
-\usepackage{enumitem} 				% for tweaking lists
+\usepackage[inline]{enumitem} 		% for tweaking lists
 \usepackage{etoolbox} 				% for \ifstrempty, \ifdef
 \usepackage[margin=3cm]{geometry}	% extend page margins
 \usepackage{graphicx} 				% for graphics
@@ -17,7 +17,7 @@
 \usepackage{tabularx} 				% for simple column stretching
 \usepackage{verbatim} 				% for block commenting
 \usepackage{xcolor} 				% for colours
-%------------------------------------------------%
+%------------------------------------------------------------------------------%
 
 % My details
 \input{MyDetails}
@@ -30,9 +30,9 @@
 \author{\Large{\underline{Cirriculum Vitae}}}
 \date{}
 
-%================================================%
-% Configuration
-%================================================%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONFIGURATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Show the tools used at each previous job
 \newboolean{showTools}
 \setboolean{showTools}{false}
@@ -40,7 +40,7 @@
 % Show the grades from my education
 \newboolean{showGrades}
 \setboolean{showGrades}{true}
-%------------------------------------------------%
+%------------------------------------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CUSTOM MACROS
@@ -53,6 +53,13 @@
 \newcolumntype{L}[1]{>{\raggedleft}p{#1}}
 \newcolumntype{R}[1]{p{#1}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+%------------------------------------------------%
+
+%================================================%
+% Comma-separated list
+%================================================%
+\newlist{commalist}{description*}{4}
+\setlist[commalist]{itemjoin={{,}},itemjoin*={{ and}},afterlabel=\unskip{{~}}}
 %------------------------------------------------%
 
 %================================================%
@@ -84,7 +91,7 @@
 
 %================================================%
 % \begin{technicalSkills}
-% \technicalSkillsItem{itemName}{itemValues}
+% \technicalSkillsItem}{itemName}{itemValues}
 % \end{technicalSkills}
 %================================================%
 \newenvironment{technicalSkills}%
@@ -94,7 +101,10 @@
 %
 \newcommand\technicalSkillsItem[2]{%
 \ifdef{\separator}{\separator}{}%
-##1 & ##2 %
+##1 & %
+\begin{commalist} %
+##2 %
+\end{commalist}.%
 \def\separator{\vspace{0.5em} \\}%
 }%
 %
@@ -309,12 +319,37 @@ individual and as a key player in the organization's development.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Technical Skills}
 \begin{technicalSkills}
-\technicalSkillsItem{Programming Languages}{C, C++, Java, Perl, Python}
-\technicalSkillsItem{Web-Based Development}{PHP, JavaScript, CSS, HTML}
-\technicalSkillsItem{Document markup}{\LaTeX}
-\technicalSkillsItem{Databases}{Oracle, MySQL, postgreSQL}
-\technicalSkillsItem{Operating Systems}{Microsoft Windows, Linux, Solaris}
-\technicalSkillsItem{Tools}{Git, Subversion, Eclipse IDE}
+\technicalSkillsItem{Programming Languages}
+{\item C
+\item C++
+\item Java
+\item Perl
+\item Python}
+
+\technicalSkillsItem{Web-Based Development}
+{\item PHP
+\item JavaScript
+\item CSS
+\item HTML}
+
+\technicalSkillsItem{Document markup}
+{\item \LaTeX}
+
+\technicalSkillsItem{Databases}
+{\item Oracle
+\item MySQL
+\item postgreSQL}
+
+\technicalSkillsItem{Operating Systems}
+{\item Microsoft Windows
+\item Linux
+\item Solaris}
+
+\technicalSkillsItem{Tools}
+{\item Git
+\item Subversion
+\item Eclipse IDE}
+
 \end{technicalSkills}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
