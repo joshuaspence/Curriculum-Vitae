@@ -191,7 +191,7 @@
 \ifthenelse{\boolean{showGrades}}%
 	{\ifstrempty{##5}%
 		{}%
-		{\\ %
+		{\\* %
 			& \begin{tabularx}{\rwidth}{Xr}%
 			##5 %
 			\end{tabularx}%
@@ -240,7 +240,7 @@
 \newcommand\qualification[3]{%
 \ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\ %
+& \textbf{##2} \\* %
 & ##3 %
 \def\separator{\vspace{0.5em} \\}%
 }%
@@ -263,7 +263,7 @@
 \newcommand\achievement[3]{%
 \ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\ %
+& \textbf{##2} \\* %
 & ##3 %
 \def\separator{\vspace{0.5em} \\}%
 }%
@@ -434,7 +434,12 @@ servers.}
 {\item Ubuntu Server
 \item Sun Solaris
 \item Zettabyte File System (ZFS)
-\item Zimbra}
+\item Zimbra
+\item HTML
+\item CSS
+\item PHP
+\item Apache
+\item Joomla}
 
 % Industrial Student (TransGrid)
 \professionalExperienceItem{December 2010}{February 2011}
@@ -444,7 +449,7 @@ involved with various projects including earth grid safety inspections and
 progress meetings with contractors.
 
 This work experience was a paid work experience offered as a part of my 
-`Australian Power Institute' bursary.
+\company{Australian Power Institute} bursary.
 
 Whilst at \company{TransGrid}, I developed a database utility using 
 Microsoft Access and Visual Basic to assist the projects team with managing and 
@@ -463,7 +468,7 @@ with large amounts of data existing in SQL tables which are updated hourly based
 on real-time monitoring data.
 
 This work experience was a paid work experience offered as a part of my 
-``Australian Power Institute'' bursary.
+\company{Australian Power Institute} bursary.
 
 My main role within the team was working on improving the reliability and 
 accuracy of the operations of the team by designing software-based tools to 
@@ -485,7 +490,7 @@ discuss implementation details for a smart metering device that was being
 developed.
 
 This work experience was a paid work experience offered as a part of my 
-``Australian Power Institute'' bursary.}
+\company{Australian Power Institute} bursary.}
 {}
 
 % Customer Service Officer (The Hills Shire Council)
@@ -532,22 +537,12 @@ skills with HTML, PHP, CSS, Apache, Unix and MySQL as I was responsible for
 developing and maintaining the business' website. I decided to end my commitment
 to the business as it was the not the field in which I intended to pursue a 
 career.}
-{}
-\begin{comment}
-\item Web development
-\begin{itemize}
-	\item HTML
-	\item PHP
-	\item CSS
-\end{itemize}
-
-\item Web administration
-\begin{itemize}
-	\item Apache
-	\item Unix
-	\item MySQL
-\end{itemize}
-\end{comment}
+{\item HTML
+\item PHP
+\item CSS
+\item Apache
+\item Unix
+\item MySQL}
 \end{professionalExperience}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -594,8 +589,8 @@ shells up to 150 mm)}
 \section*{Qualifications and Training}
 \begin{qualifications}
 \qualification{23 March 2011}{Leadership Training}
-{Participated in an internal leadership training program facilitated by `The 
-Hills Shire Council'.}
+{Participated in an internal leadership training program facilitated by 
+\company{The Hills Shire Council}.}
 
 \qualification{28 February 2011}{Senior First Aid}
 {Statement of Attainment for fulfilling the requirements of HLTFA301B (Apply 
@@ -610,8 +605,8 @@ Responsible Service of Alcohol) in partial completion of the Certificate II in
 Hospitality (Operations) qualification.}
 
 \qualification{26 February 2008}{Turning Shoppers into Buyers}
-{Certificate of achievement for participation in the Jaycar ``Turning Shoppers 
-into Buyers''  Retail Sales Skills training.}
+{Certificate of achievement for participation in the \company{Jaycar} ``Turning 
+Shoppers into Buyers'' Retail Sales Skills training.}
 
 \qualification{5 July 2007}{Defensive Driving}
 {Statement of Completion for completion of the Murcotts Level 1 Defensive 
@@ -625,9 +620,9 @@ the Transport \& Distribution Package TDT02.}
 \subsection*{Awards and Achievements}
 \begin{achievements}
 \achievement{2008--2010}{Australian Power Institute Bursary}
-{Awarded the Australian Power Institute Power Engineering Bursary. Rejected the 
-bursary for the period 2011 onwards as I decided that this was not a field in 
-which I wanted to pursue a career.}
+{Awarded the \company{Australian Power Institute} Power Engineering Bursary. 
+Rejected the bursary for the period 2011 onwards as I decided that this was not 
+a field in which I wanted to pursue a career.}
 
 \achievement{2008--2009}{University of Sydney: Talented Students Program}
 {Admitted to the University of Sydney Talented Student Program, a program 
@@ -635,12 +630,12 @@ designed to make special arrangements which offer an intellectual challenge to
 elite students while they are studying at the University of Sydney.}
 
 \achievement{2008}{University of Sydney: Advanced Engineering}
-{Admitted to the University of Sydney Advanced Engineering Program, designed to 
-enable high achieving students to work on engineering and IT interdisciplinary
-project during their first semester.
+{Admitted to the \educationInstitute{University of Sydney} Advanced Engineering 
+Program, designed to enable high achieving students to work on engineering and 
+IT interdisciplinary project during their first semester.
 
-My group was awarded the `Best Project' and `Best Presentation' for our Stirling
-engine project.}
+My group was awarded the ``Best Project'' and ``Best Presentation'' for our 
+Stirling engine project.}
 
 \achievement{2007}{National Youth Science Forum}
 {Was one of six Australian students to be selected to attend the Genesis Science
