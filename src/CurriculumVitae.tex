@@ -7,7 +7,7 @@
 
 \usepackage{commasep}				% for comma-separated lists
 \usepackage{enumitem} 				% for tweaking lists
-\usepackage{etoolbox} 				% for \ifstrempty
+\usepackage{etoolbox} 				% for \ifstrempty, \ifdef
 \usepackage[margin=3cm]{geometry}	% extend page margins
 \usepackage{graphicx} 				% for graphics
 \usepackage[hidelinks]{hyperref} 	% for hyperlinks
@@ -39,7 +39,7 @@
 
 % Show the grades from my education
 \newboolean{showGrades}
-\setboolean{showTools}{true}
+\setboolean{showGrades}{true}
 %------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +67,7 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\personalDetailsItem[2]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 ##1 & ##2 %
 \def\separator{\\}%
 }%
@@ -78,8 +78,7 @@
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}
-}
+}%
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -94,14 +93,13 @@
 \def\rwidth{0.64\textwidth}%
 %
 \newcommand\technicalSkillsItem[2]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 ##1 & ##2 %
 \def\separator{\vspace{0.5em} \\}%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
-}
+}%
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -116,9 +114,14 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\professionalExperienceItem[6]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 % Employment period
-\multirow{\ifstrempty{##6}{2}{3}}{\lwidth}{##1 -- ##2}%
+\ifthenelse{\boolean{showTools}}%
+	{\ifstrempty{##6}
+		{\def\numRows{2}}%
+		{\def\numRows{3}}}%
+	{\def\numRows{2}}%
+\multirow{\numRows}{\lwidth}{##1 -- ##2}%
 %
 % Position and company
 & \textbf{##3 (##4)} \\
@@ -126,7 +129,6 @@
 % Job description
 & ##5 %
 \ifthenelse{\boolean{showTools}}%
-	{}%
 	{\ifstrempty{##6}%
 		{}%
 		{\vspace{0.5em} \\
@@ -136,11 +138,11 @@
 			\end{itemize}%
 		}%
 	}%
+	{}%
 \def\separator{\vspace{1em} \\}%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
 }%
 {\end{longtable}}
 %------------------------------------------------%
@@ -156,27 +158,32 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\educationItem[5]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 % Education period
-\multirow{\ifstrempty{##5}{1}{2}}{\lwidth}{##1 -- ##2}%
-% Name and institution
-& \textbf{##3 (##4)} %
 \ifthenelse{\boolean{showGrades}}%
-	{}%
+	{\ifstrempty{##5}%
+		{\def\numRows{1}}%
+		{\def\numRows{2}}%
+	}%
+	{\def\numRows{1}}%
+\multirow{\numRows}{\lwidth}{##1 -- ##2}%
+% Name and institution
+& \textbf{##3 (##4)}%
+\ifthenelse{\boolean{showGrades}}%
 	{\ifstrempty{##5}%
 		{}%
-		{ \\
+		{\\
 			& \begin{tabularx}{\rwidth}{Xr}%
 			##5 %
 			\end{tabularx}%
 		}%
 	}%
-\def\separator{\vspace{1em} \\}%
+	{}%
+\def\separator{\vspace{0.5em} \\}%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
-}
+}%
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -187,18 +194,17 @@
 %================================================%
 \newenvironment{licenses}
 {%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
+\def\lwidth{0.25\textwidth}%
+\def\rwidth{0.69\textwidth}%
 %
 \newcommand\license[3]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 ##1 & ##3 %
 \def\separator{\\}%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
-}
+}%
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -209,19 +215,18 @@
 %================================================%
 \newenvironment{qualifications}%
 {%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
+\def\lwidth{0.20\textwidth}%
+\def\rwidth{0.74\textwidth}%
 %
 \newcommand\qualification[3]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\
 & ##3 %
-\def\separator{\vspace{1em} \\}%
+\def\separator{\vspace{0.5em} \\}%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
 }
 {\end{longtable}}
 %------------------------------------------------%
@@ -237,16 +242,15 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\achievement[3]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\
 & ##3 %
-\def\separator{\vspace{1em} \\}%
-}
+\def\separator{\vspace{0.5em} \\}%
+}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-\def\separator{}%
-}
+}%
 {\end{longtable}}
 %------------------------------------------------%
 
