@@ -35,7 +35,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Show the tools used at each previous job
 \newboolean{showTools}
-\setboolean{showTools}{false}
+\setboolean{showTools}{true}
 
 % Show the grades from my education
 \newboolean{showGrades}
@@ -63,6 +63,15 @@
 %------------------------------------------------%
 
 %================================================%
+% Custom formatting
+%================================================%
+\newcommand\jobTitle[1]{\emph{#1}}
+\newcommand\company[1]{``#1''}
+\newcommand\qualificationName[1]{\emph{#1}}
+\newcommand\educationInstitute[1]{``#1''}
+%------------------------------------------------%
+
+%================================================%
 % \begin{personalDetails}
 % \personalDetailsItem{itemName}{itemValue}
 % \personalDetailsItemWithSpace{itemName}{itemValue}{spacing}
@@ -79,13 +88,13 @@
 \def\separator{\\}%
 }%
 \newcommand\personalDetailsItemWithSpace[3]{%
-\separator
+\ifdef{\separator}{\separator}{}%
 ##1 & ##2 %
 \def\separator{\vspace{##3em} \\}%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -109,7 +118,7 @@
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -127,22 +136,22 @@
 \ifdef{\separator}{\separator}{}%
 % Employment period
 \ifthenelse{\boolean{showTools}}%
-	{\ifstrempty{##6}
+	{\ifstrempty{##6}%
 		{\def\numRows{2}}%
 		{\def\numRows{3}}}%
 	{\def\numRows{2}}%
 \multirow{\numRows}{\lwidth}{##1 -- ##2}%
 %
 % Position and company
-& \textbf{##3 (##4)} \\
+& \textbf{##3 (##4)} \\* %
 %
 % Job description
 & ##5 %
 \ifthenelse{\boolean{showTools}}%
 	{\ifstrempty{##6}%
 		{}%
-		{\vspace{0.5em} \\
-			& \textbf{Tools:} \newline
+		{\vspace{1em} \\ %
+			& \textbf{Tools:} %
 			\begin{itemize}[itemsep=0pt]%
 			##6 %
 			\end{itemize}%
@@ -153,7 +162,7 @@
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -182,7 +191,7 @@
 \ifthenelse{\boolean{showGrades}}%
 	{\ifstrempty{##5}%
 		{}%
-		{\\
+		{\\ %
 			& \begin{tabularx}{\rwidth}{Xr}%
 			##5 %
 			\end{tabularx}%
@@ -193,7 +202,7 @@
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -214,7 +223,7 @@
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -231,7 +240,7 @@
 \newcommand\qualification[3]{%
 \ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\
+& \textbf{##2} \\ %
 & ##3 %
 \def\separator{\vspace{0.5em} \\}%
 }%
@@ -254,13 +263,13 @@
 \newcommand\achievement[3]{%
 \ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\
+& \textbf{##2} \\ %
 & ##3 %
 \def\separator{\vspace{0.5em} \\}%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
-}%
+}
 {\end{longtable}}
 %------------------------------------------------%
 
@@ -303,15 +312,15 @@ individual and as a key player in the organization's development.
 \section*{Summary}
 \begin{itemize}
 \begin{comment}
-	\item Currently working as a \emph{Graduate Software Engineer} at the 
-		``Reserve Bank of Australia''.
+	\item Currently working as a \jobTitle{Graduate Software Engineer} at the 
+		\company{Reserve Bank of Australia}.
 \end{comment}
-	\item Currently working as a \emph{Engineering/Data Analytics Intern} at  
-		``Freelancer.com''.
-	\item Will graduate from the ``University of Sydney'' with a 
-		\emph{Bachelor of Engineering (Computer)} in 2012.
-	\item Will graduate from the ``University of Sydney'' with a 
-		\emph{Bachelor of Science (Computer Science)} in 2012.
+	\item Currently working as a \jobTitle{Engineering/Data Analytics Intern} at  
+		\company{Freelancer.com}.
+	\item Will graduate from the \educationInstitute{University of Sydney} with 
+		a \qualificationName{Bachelor of Engineering (Computer)} in 2012.
+	\item Will graduate from the \educationInstitute{University of Sydney} with 
+		a \qualificationName{Bachelor of Science (Computer Science)} in 2012.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -377,9 +386,9 @@ session.}
 \professionalExperienceItem{July 2012}{present}
 {Engineering/Data Analytics Intern}{Freelancer.com}
 {My job involved assisting in the design and implementation of software for use
-by Freelancer.com. This included working with other staff to establish technical
-specifications, developing the software and performing data analysis techniques 
-to improve key business metrics.}
+by \company{Freelancer.com}. This included working with other staff to establish
+technical specifications, developing the software and performing data analysis 
+techniques to improve key business metrics.}
 {}
 
 % Tutor (University of Sydney)
@@ -402,16 +411,14 @@ I completed two primary tasks during my employment. The major task was porting
 ``iperf'' (a network throughput management software) to the WICED development 
 system. In addition, I added the capability to trace thread execution of a Real 
 Time Operating System.}
-{
-\item C
+{\item C
 \item Eclipse IDE
 \item Subversion
+\item GDB
 \item ThreadX
 \item NetX
 \item FreeRTOS
-\item LwIP
-% TODO
-}
+\item LwIP}
 
 % System Administrator (Audinate)
 \professionalExperienceItem{April 2011}{July 2012}
@@ -421,47 +428,42 @@ Sun Solaris. I administered various services including LDAP, ZFS (Zettabyte File
 System), IMAP/SMTP (Zimbra) and NFS. I also worked extensively with VMware 
 Server during this role.
 
-Through this position, I have gained a wide range of experience including 
-website administration, Unix administration and designing and building dedicated
-Unix servers.}
-{
-\item Ubuntu Server
+Through this position, I gained a wide range of experience including website
+administration, Unix administration and designing and building dedicated Unix
+servers.}
+{\item Ubuntu Server
 \item Sun Solaris
 \item Zettabyte File System (ZFS)
-\item Zimbra
-% TODO
-}
+\item Zimbra}
 
 % Industrial Student (TransGrid)
 \professionalExperienceItem{December 2010}{February 2011}
 {Industrial Student}{TransGrid}
-{In this position, I worked in the `Projects (Central Region)' section. I was 
+{In this position, I worked in the ``Projects (Central Region)'' section. I was 
 involved with various projects including earth grid safety inspections and 
 progress meetings with contractors.
 
 This work experience was a paid work experience offered as a part of my 
 `Australian Power Institute' bursary.
 
-Whilst at TransGrid, I developed a database utility using Microsoft Access and 
-Visual Basic to assist the projects team with managing and tracking project 
-completion. Whilst VBA is not considered a sophisticated programming language, 
-this was an interesting experience in which I was required to write some 
-sophisticated temporal SQL queries.}
-{
-\item Microsoft Access
+Whilst at \company{TransGrid}, I developed a database utility using 
+Microsoft Access and Visual Basic to assist the projects team with managing and 
+tracking project completion. Whilst VBA is not a sophisticated or complicated
+programming language, this was an interesting experience in which I was required
+to write some sophisticated temporal SQL queries.}
+{\item Microsoft Access
 \item Visual Basic for Applications (VBA)
-\item SQL
-}
+\item SQL}
 
 % Industrial Student (Australian Energy Market Operator)
 \professionalExperienceItem{December 2009}{February 2010}
 {Industrial Student}{Australian Energy Market Operator}
-{I was working in the Metering \& Settlements team. This team had to deal with 
-large amounts of data existing in SQL tables which are updated hourly based on 
-real-time monitoring data.
+{I was working in the ``Metering \& Settlements'' team. This team had to deal 
+with large amounts of data existing in SQL tables which are updated hourly based 
+on real-time monitoring data.
 
 This work experience was a paid work experience offered as a part of my 
-`Australian Power Institute' bursary.
+``Australian Power Institute'' bursary.
 
 My main role within the team was working on improving the reliability and 
 accuracy of the operations of the team by designing software-based tools to 
@@ -469,22 +471,21 @@ allow them to monitor and analyse data. I analysed and reconstructed several
 macro-enabled spreadsheets used by the team to perform important calculations. I
 was able to improve the accuracy of the data reported by the spreadsheet and 
 greatly improve the running speeds of the tools.}
-{
-\item Oracle database management system
+{\item Oracle database management system
 \item Visual Basic for Applications (VBA)
-\item SQL
-}
+\item SQL}
 
 % Industrial Student (Energy Australia)
 \professionalExperienceItem{February 2009}{February 2009}
 {Industrial Student}{Energy Australia}
-{In this role, I was involved with the `Intelligent Networks' division, working 
-on an electrical sensing and monitoring system. I was involved with analysing 
-system diagrams and attending regular meetings with engineers to discuss 
-implementation details for a smart metering device that was being developed.
+{In this role, I was involved with the ``Intelligent Networks'' division, 
+working on an electrical sensing and monitoring system. I was involved with 
+analysing system diagrams and attending regular meetings with engineers to 
+discuss implementation details for a smart metering device that was being 
+developed.
 
 This work experience was a paid work experience offered as a part of my 
-`Australian Power Institute' bursary.}
+``Australian Power Institute'' bursary.}
 {}
 
 % Customer Service Officer (The Hills Shire Council)
