@@ -1,5 +1,11 @@
 \documentclass[10pt]{article}
 
+%================================================%
+% Includes
+%================================================%
+\RequirePackage[l2tabu,orthodox]{nag}
+
+\usepackage{commasep}				% for comma-separated lists
 \usepackage{enumitem} 				% for tweaking lists
 \usepackage{etoolbox} 				% for \ifstrempty
 \usepackage[margin=3cm]{geometry}	% extend page margins
@@ -11,6 +17,7 @@
 \usepackage{tabularx} 				% for simple column stretching
 \usepackage{verbatim} 				% for block commenting
 \usepackage{xcolor} 				% for colours
+%------------------------------------------------%
 
 % My details
 \input{MyDetails}
@@ -19,124 +26,228 @@
 \graphicspath{{./img/}}
 
 % Title details
-\title{\Huge{\bf{\myName}}}
+\title{\Huge{\textbf{\myName}}}
 \author{\Large{\underline{Cirriculum Vitae}}}
 \date{}
 
 %================================================%
 % Configuration
 %================================================%
+% Show the tools used at each previous job
 \newboolean{showTools}
 \setboolean{showTools}{false}
+
+% Show the grades from my education
+\newboolean{showGrades}
+\setboolean{showTools}{true}
 %------------------------------------------------%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CUSTOM MACROS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %================================================%
 % For table styling
 %================================================%
 \definecolor{lightgray}{gray}{0.8}
-\newcolumntype{L}[1]{>{\raggedleft}p{#1\textwidth}}
-\newcolumntype{R}[1]{p{#1\textwidth}}
+\newcolumntype{L}[1]{>{\raggedleft}p{#1}}
+\newcolumntype{R}[1]{p{#1}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
 %------------------------------------------------%
 
 %================================================%
-% For comma-separated lists
+% \begin{personalDetails}
+% \personalDetailsItem{itemName}{itemValue}
+% \personalDetailsItemWithSpace{itemName}{itemValue}{spacing}
+% \end{personalDetails}
 %================================================%
-\makeatletter
-\newcommand*\commasep[2][, ]{%
-	\begingroup
-	\def\commasepsep{#1\space}%  store separator e.g. ','
-	\def\commasependsep{\space#2\space}%  store last separator e.g. 'and'
-	\@commasep
+\newenvironment{personalDetails}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\personalDetailsItem[2]{%
+\separator
+##1 & ##2 %
+\def\separator{\\}%
+}%
+\newcommand\personalDetailsItemWithSpace[3]{%
+\separator
+##1 & ##2 %
+\def\separator{\vspace{##3em} \\}%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}
 }
-\newcommand*\@commasep[1][.]{%
-	\def\commasepend{#1}%  store end marker e.g. '.'
-	\@ifnextchar\endcommasep{}{%  check for empty list
-		\catcode\endlinechar\active%  make end-of-line active
-		\commasepfirstelement%  read first element
-	}%
-}%
-\begingroup
-\catcode\endlinechar\active%
-% The `~` character represents the end-of-line character in the
-% code below:
-\lccode`\~=\endlinechar%
-\lowercase{%
-% Read first element
-\gdef\commasepfirstelement#1~}{%
-	#1%
-	\@ifnextchar\endcommasep{%
-		\commasepend% remove this if you don't want one with only one element
-	}{%
-		\commasepelement% no comma here!
-	}%
-}%
-\lowercase{%
-\endgroup%
-% Read all other elements
-\gdef\commasepelement#1~}{%
-	\@ifnextchar\endcommasep{% Stop at `\endcommasep`
-		\commasependsep#1\commasepend%
-	}{%
-		\commasepsep#1\commasepelement%
-	}%
-}%
-\def\endcommasep{%
-	\@gobble{endcommasep}% be unique (for `\@ifnextchar`) 
-	\endgroup
-}%
-\makeatother
+{\end{longtable}}
 %------------------------------------------------%
 
 %================================================%
-% \professionalExperience{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{tools}
+% \begin{technicalSkills}
+% \technicalSkillsItem{itemName}{itemValues}
+% \end{technicalSkills}
 %================================================%
-\newcommand{\professionalExperience}[6]{%
-\multirow{\ifstrempty{#6}{2}{3}}{\lwidth}{#1 -- #2}%
-& {\bf #3 (#4)} \\ %
-& #5 %
+\newenvironment{technicalSkills}%
+{%
+\def\lwidth{0.3\textwidth}%
+\def\rwidth{0.64\textwidth}%
+%
+\newcommand\technicalSkillsItem[2]{%
+\separator
+##1 & ##2 %
+\def\separator{\vspace{0.5em} \\}%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{professionalExperience}
+% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{tools}
+% \end{professionalExperience}
+%================================================%
+\newenvironment{professionalExperience}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\professionalExperienceItem[6]{%
+\separator
+% Employment period
+\multirow{\ifstrempty{##6}{2}{3}}{\lwidth}{##1 -- ##2}%
+%
+% Position and company
+& \textbf{##3 (##4)} \\
+%
+% Job description
+& ##5 %
 \ifthenelse{\boolean{showTools}}%
-{\ifstrempty{#6}%
-{}%
-{\vspace{0.5em} \\ %
-& {\bf Tools:} \newline %
-\begin{itemize}[itemsep=0pt] %
-#6 %
-\end{itemize} %
+	{}%
+	{\ifstrempty{##6}%
+		{}%
+		{\vspace{0.5em} \\
+			& \textbf{Tools:} \newline
+			\begin{itemize}[itemsep=0pt]%
+			##6 %
+			\end{itemize}%
+		}%
+	}%
+\def\separator{\vspace{1em} \\}%
 }%
+%
+\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
 }%
-{}%
-\vspace{1em} \\ %
-}
+{\end{longtable}}
 %------------------------------------------------%
 
 %================================================%
-% \education{beginYear}{endYear}{name}{institution}
+% \begin{education}
+% \educationItem{beginYear}{endYear}{name}{institution}{grades}
+% \end{education}
 %================================================%
-\newcommand{\education}[4]{%
-#1 -- #2 & {\bf #3 (#4)} \\ %
+\newenvironment{education}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\educationItem[5]{%
+\separator
+% Education period
+\multirow{\ifstrempty{##5}{1}{2}}{\lwidth}{##1 -- ##2}%
+% Name and institution
+& \textbf{##3 (##4)} %
+\ifthenelse{\boolean{showGrades}}%
+	{}%
+	{\ifstrempty{##5}%
+		{}%
+		{ \\
+			& \begin{tabularx}{\rwidth}{Xr}%
+			##5 %
+			\end{tabularx}%
+		}%
+	}%
+\def\separator{\vspace{1em} \\}%
+}%
+%
+\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
 }
+{\end{longtable}}
 %------------------------------------------------%
 
 %================================================%
-% \achievement{date}{name}{description}
-%================================================%
-\newcommand{\achievement}[3]{%
-\multirow{2}{*}{#1}%
-& {\bf #2} \\ %
-& #3 %
-\vspace{1em} \\ %
-}
-%------------------------------------------------%
-
-%================================================%
+% \begin{licenses}
 % \license{name}{provider}{description}
+% \end{licenses}
 %================================================%
-\newcommand{\license}[3]{#1 & #3 \\}
+\newenvironment{licenses}
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\license[3]{%
+\separator
+##1 & ##3 %
+\def\separator{\\}%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{qualifications}
+% \qualification{date}{name}{description}
+% \end{qualifications}
+%================================================%
+\newenvironment{qualifications}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\qualification[3]{%
+\separator
+\multirow{2}{\lwidth}{##1}%
+& \textbf{##2} \\
+& ##3 %
+\def\separator{\vspace{1em} \\}%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{achievements}
+% \achievement{date}{name}{description}
+% \end{achievements}
+%================================================%
+\newenvironment{achievements}
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\achievement[3]{%
+\separator
+\multirow{2}{\lwidth}{##1}%
+& \textbf{##2} \\
+& ##3 %
+\def\separator{\vspace{1em} \\}%
+}
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+\def\separator{}%
+}
+{\end{longtable}}
 %------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -162,17 +273,15 @@ individual and as a key player in the organization's development.
 % Personal details
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Personal details}
-\begin{tabular}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
-Name & \myName \\
-Date of Birth & \myDOB \\
-Address & \myAddress{\newline} \vspace{1em} \\
-
-Mobile & \myMobile \vspace{1em} \\
-
-Email & \myEmail \\
-LinkedIn & \myLinkedIn \\
-GitHub & \myGithub \\
-\end{tabular}
+\begin{personalDetails}
+\personalDetailsItem{Name}{\myName}
+\personalDetailsItem{Date of Birth}{\myDOB}
+\personalDetailsItemWithSpace{Address}{\myAddress{\newline}}{1}
+\personalDetailsItemWithSpace{Mobile}{\myMobile}{1}
+\personalDetailsItem{Email}{\myEmail}
+\personalDetailsItem{LinkedIn}{\myLinkedIn}
+\personalDetailsItem{GitHub}{\myGithub}
+\end{personalDetails}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Summary
@@ -195,72 +304,29 @@ GitHub & \myGithub \\
 % Technical Skills
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Technical Skills}
-\begin{tabular}{>{\bfseries}L{0.3}!{\VRule}R{0.64}}
-
-Programming Languages &
-\commasep[,]{and}[.]
-C
-C++
-Java
-Perl
-Python
-\endcommasep \vspace{0.5em} \\
-
-Web-Based Development &
-\commasep[,]{and}[.]
-PHP
-JavaScript
-CSS
-HTML
-\endcommasep \vspace{0.5em} \\
-
-Document markup &
-\commasep[,]{and}[.]
-\LaTeX
-\endcommasep \vspace{0.5em} \\
-
-Databases &
-\commasep[,]{and}[.]
-Oracle
-MySQL
-postgreSQL
-\endcommasep \vspace{0.5em} \\
-
-Operating Systems &
-\commasep[,]{and}[.]
-Microsoft Windows
-Linux
-Solaris
-\endcommasep \vspace{0.5em} \\
-
-Tools &
-\commasep[,]{and}[.]
-Git
-Subversion
-Eclipse IDE
-\endcommasep \vspace{0.5em} \\
-
-\end{tabular}
-\newpage
+\begin{technicalSkills}
+\technicalSkillsItem{Programming Languages}{C, C++, Java, Perl, Python}
+\technicalSkillsItem{Web-Based Development}{PHP, JavaScript, CSS, HTML}
+\technicalSkillsItem{Document markup}{\LaTeX}
+\technicalSkillsItem{Databases}{Oracle, MySQL, postgreSQL}
+\technicalSkillsItem{Operating Systems}{Microsoft Windows, Linux, Solaris}
+\technicalSkillsItem{Tools}{Git, Subversion, Eclipse IDE}
+\end{technicalSkills}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Professional experience
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Professional Experience}
-\begin{longtable}{L{0.16}!{\VRule}R{0.78}}
-\global\def \lwidth{0.16\textwidth}
-\global\def \rwidth{0.78\textwidth}
-
-% Software Engineering Graduate (Reserve Bank of Australia)
+\begin{professionalExperience}
 \begin{comment}
+% Software Engineering Graduate (Reserve Bank of Australia)
 \professionalExperience{February 2013}{present}
 {Software Engineering Graduate}{Reserve Bank of Australia}
 {TODO}
 {}
 \end{comment}
-
 % Tutor (University of Sydney)
-\professionalExperience{August 2012}{present}
+\professionalExperienceItem{August 2012}{present}
 {Tutor}{University of Sydney}
 {I was a tutor for a first year electrical engineering unit of study, named 
 ``Foundations of Computer Systems'' (ELEC1601). This position involved preparing
@@ -269,7 +335,7 @@ session.}
 {}
 
 % Engineering/Data Analytics Intern (Freelancer.com)
-\professionalExperience{July 2012}{present}
+\professionalExperienceItem{July 2012}{present}
 {Engineering/Data Analytics Intern}{Freelancer.com}
 {My job involved assisting in the design and implementation of software for use
 by Freelancer.com. This included working with other staff to establish technical
@@ -278,7 +344,7 @@ to improve key business metrics.}
 {}
 
 % Tutor (University of Sydney)
-\professionalExperience{March 2012}{June 2012}
+\professionalExperienceItem{March 2012}{June 2012}
 {Tutor}{University of Sydney}
 {I was a tutor for a first year electrical engineering unit of study, named 
 ``Fundamentals of Electrical and Electronic Engineering'' (ELEC1103). This 
@@ -287,7 +353,7 @@ students in each session.}
 {}
 
 % Software Engineering Intern (Broadcom)
-\professionalExperience{November 2011}{February 2012}
+\professionalExperienceItem{November 2011}{February 2012}
 {Software Engineering Intern}{Broadcom}
 {This position was a great experience and allowed me to further my experience in
 embedded computing. I was involved in developing the SDK for Broadcom's WICED 
@@ -309,7 +375,7 @@ Time Operating System.}
 }
 
 % System Administrator (Audinate)
-\professionalExperience{April 2011}{July 2012}
+\professionalExperienceItem{April 2011}{July 2012}
 {System Administrator}{Audinate}
 {In this role I administered various servers running on either Ubuntu Server or 
 Sun Solaris. I administered various services including LDAP, ZFS (Zettabyte File
@@ -328,7 +394,7 @@ Unix servers.}
 }
 
 % Industrial Student (TransGrid)
-\professionalExperience{December 2010}{February 2011}
+\professionalExperienceItem{December 2010}{February 2011}
 {Industrial Student}{TransGrid}
 {In this position, I worked in the `Projects (Central Region)' section. I was 
 involved with various projects including earth grid safety inspections and 
@@ -349,7 +415,7 @@ sophisticated temporal SQL queries.}
 }
 
 % Industrial Student (Australian Energy Market Operator)
-\professionalExperience{December 2009}{February 2010}
+\professionalExperienceItem{December 2009}{February 2010}
 {Industrial Student}{Australian Energy Market Operator}
 {I was working in the Metering \& Settlements team. This team had to deal with 
 large amounts of data existing in SQL tables which are updated hourly based on 
@@ -371,7 +437,7 @@ greatly improve the running speeds of the tools.}
 }
 
 % Industrial Student (Energy Australia)
-\professionalExperience{February 2009}{February 2009}
+\professionalExperienceItem{February 2009}{February 2009}
 {Industrial Student}{Energy Australia}
 {In this role, I was involved with the `Intelligent Networks' division, working 
 on an electrical sensing and monitoring system. I was involved with analysing 
@@ -383,7 +449,7 @@ This work experience was a paid work experience offered as a part of my
 {}
 
 % Customer Service Officer (The Hills Shire Council)
-\professionalExperience{January 2009}{present}
+\professionalExperienceItem{January 2009}{present}
 {Customer Service Officer}{The Hills Shire Council}
 {This role involved taking phone calls and handling enquiries regarding the 
 council's community halls and other related facilities, as well as entering 
@@ -395,7 +461,7 @@ supervising events taking place in the council facilities.}
 {}
 
 % Chief Pyrotechnician (Howard & Sons Pyrotechnics)
-\professionalExperience{July 2008}{present}
+\professionalExperienceItem{July 2008}{present}
 {Chief Pyrotechnician}{Howard \& Sons Pyrotechnics}
 {I am a licensed pyrotechnician for a world-class pyrotechnics company. As a 
 chief pyrotechnician, I am responsible for many aspects of a pyrotechnics 
@@ -414,7 +480,7 @@ pyrotechnics display to musical soundtracks.}
 {}
 
 % Managing Director (Abstract Productions)
-\professionalExperience{October 2008}{October 2011}
+\professionalExperienceItem{October 2008}{October 2011}
 {Managing Director}{Abstract Productions}
 {Alongside with a close friend and business partner, I owned and operated my own
 business providing audio and lighting equipment and technical services for live
@@ -442,84 +508,82 @@ career.}
 	\item MySQL
 \end{itemize}
 \end{comment}
-
-% we need \makeatletter because \@undefined uses the special @ character.
-\makeatletter
-\global\def \lwidth{\@undefined}
-\global\def \rwidth{\@undefined}
-\makeatother
-
-\end{longtable}
+\end{professionalExperience}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Education
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Education}
-\begin{longtable}{L{0.16}!{\VRule}R{0.78}}
+\begin{education}
+\educationItem{2008}{2012}
+{Bachelor of Engineering (Computer)}
+{University of Sydney}
+{}
 
-\education{2008}{2012}{Bachelor of Engineering (Computer)}{University of Sydney}
+\educationItem{2008}{2012}
+{Bachelor of Science (Computer Science)}
+{University of Sydney}
+{}
 
-\education{2008}{2012}{Bachelor of Science (Computer Science)}{University of Sydney}
-
-\education{2002}{2007}{Higher School Certificate}{Cherrybrook Technology High School}
-& \begin{tabularx}{0.78\textwidth}{Xr}
-Chemistry &					90/100 \\
+\educationItem{2002}{2007}
+{Higher School Certificate}
+{Cherrybrook Technology High School}
+{Chemistry &				90/100 \\
 English (Advanced) & 		88/100 \\
 Mathematics Extension 1 &	97/100 \\
 Mathematics Extension 2 & 	94/100 \\
 Physics & 					95/100 \\
-UAI & 						99.25
-\end{tabularx}
-
-\end{longtable}
+UAI & 						99.25}
+\end{education}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Awards, licenses and qualifications
+% Licenses
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Awards, licenses and qualifications}
-
-\subsection*{Licenses}
-\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
+\section*{Licenses}
+\begin{licenses}
 \license{Driver License}{RTA}{Class C Driver's License}
 \license{Explosives License}{Workcover NSW}{Pyrotechnician's License (Organised 
 Public Display, Ground display fireworks, Theatrical/indoor fireworks, Aerial 
 shells up to 150 mm)}
 \license{Boat Driver's License}{NSW Maritime}{Boat Driver's License}
-\end{longtable}
+\end{licenses}
 
-\subsection*{Qualifications and Training}
-\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
-
-\achievement{23 March 2011}{Leadership Training}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Qualifications and Training
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Qualifications and Training}
+\begin{qualifications}
+\qualification{23 March 2011}{Leadership Training}
 {Participated in an internal leadership training program facilitated by `The 
 Hills Shire Council'.}
 
-\achievement{28 February 2011}{Senior First Aid}
+\qualification{28 February 2011}{Senior First Aid}
 {Statement of Attainment for fulfilling the requirements of HLTFA301B (Apply 
 First Aid) from the Health Training Package HLT07.}
 
-\achievement{April 2010}{Safety Checking Electrical Appliances}
+\qualification{April 2010}{Safety Checking Electrical Appliances}
 {TAFE Statement in Safety Checking Electrical Appliances.}
 
-\achievement{2 December 2008}{Responsible Service of Alcohol}
+\qualification{2 December 2008}{Responsible Service of Alcohol}
 {Statement of Attainment for fulfilling the requirements of THHBFB09B (Provide 
 Responsible Service of Alcohol) in partial completion of the Certificate II in 
 Hospitality (Operations) qualification.}
 
-\achievement{26 February 2008}{Turning Shoppers into Buyers}
+\qualification{26 February 2008}{Turning Shoppers into Buyers}
 {Certificate of achievement for participation in the Jaycar ``Turning Shoppers 
 into Buyers''  Retail Sales Skills training.}
 
-\achievement{5 July 2007}{Defensive Driving}
+\qualification{5 July 2007}{Defensive Driving}
 {Statement of Completion for completion of the Murcotts Level 1 Defensive 
 Driving Program based on the unit of competence TDTC197B (Drive Vehicle) from 
 the Transport \& Distribution Package TDT02.}
+\end{qualifications}
 
-\end{longtable}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Awards and Achievements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Awards and Achievements}
-\begin{longtable}{>{\bfseries}L{0.16}!{\VRule}R{0.78}}
-
+\begin{achievements}
 \achievement{2008--2010}{Australian Power Institute Bursary}
 {Awarded the Australian Power Institute Power Engineering Bursary. Rejected the 
 bursary for the period 2011 onwards as I decided that this was not a field in 
@@ -541,8 +605,7 @@ engine project.}
 \achievement{2007}{National Youth Science Forum}
 {Was one of six Australian students to be selected to attend the Genesis Science
 \& Technology Summer School in Auckland, New Zealand.}
-
-\end{longtable}
+\end{achievements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % References and Referees
