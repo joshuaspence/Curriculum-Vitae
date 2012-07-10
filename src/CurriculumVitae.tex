@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % KNOWN ISSUES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% * Whitespace in custom environments aren't ignored.
+% * When tools are shown for previous jobs, table alignment is stuffed up.
 %------------------------------------------------------------------------------%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,7 +40,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Show the tools used at each previous job
 \newboolean{showTools}
-\setboolean{showTools}{true}
+\setboolean{showTools}{false}
 
 % Show the grades from my education
 \newboolean{showGrades}
@@ -87,16 +87,8 @@
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
 %
-\newcommand\personalDetailsItem[2]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##2 %
-\def\separator{\\}%
-}%
-\newcommand\personalDetailsItemWithSpace[2]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##2 %
-\def\separator{\\[1em]}%
-}%
+\newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+\newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }
@@ -114,12 +106,10 @@
 \def\rwidth{0.64\textwidth}%
 %
 \newcommand\technicalSkillsItem[2]{%
-\ifdef{\separator}{\separator}{}%
 ##1 & %
 \begin{commalist}%
 ##2 %
-\end{commalist}. \hfill %
-\def\separator{\\[0.5em]}%
+\end{commalist}. \hfill \\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -138,7 +128,6 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\professionalExperienceItem[6]{%
-\ifdef{\separator}{\separator{}}{}%
 % Employment period
 \ifthenelse{\boolean{showTools}}%
 	{\ifstrempty{##6}%
@@ -154,16 +143,15 @@
 & ##5 %
 \ifthenelse{\boolean{showTools}}%
 	{\ifstrempty{##6}%
-		{}%
-		{\\[1em] %
-			& \textbf{Tools:} %
-			\begin{itemize}[itemsep=0pt]%
+		{\empty}%
+		{\\[1em]%
+			& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
 			##6 %
 			\end{itemize}%
 		}%
 	}%
-	{}%
-\def\separator{\\[1em]}%
+	{\empty}%
+\\[1em]%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -184,7 +172,6 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\educationItem[5]{%
-\ifdef{\separator}{\separator}{}%
 % Education period
 \ifthenelse{\boolean{showGrades}}%
 	{\ifstrempty{##5}%
@@ -205,7 +192,7 @@
 		}%
 	}%
 	{}%
-\def\separator{\\[0.5em]}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -223,11 +210,7 @@
 \def\lwidth{0.25\textwidth}%
 \def\rwidth{0.69\textwidth}%
 %
-\newcommand\license[3]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##3 %
-\def\separator{\\}%
-}%
+\newcommand\license[3]{##1 & ##3 \\}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }
@@ -245,11 +228,10 @@
 \def\rwidth{0.74\textwidth}%
 %
 \newcommand\qualification[3]{%
-\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\* %
 & ##3 %
-\def\separator{\\[0.5em]}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -268,11 +250,10 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\achievement[3]{%
-\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\* %
 & ##3 %
-\def\separator{\\[0.5em]}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -335,7 +316,7 @@ individual and as a key player in the organization's development.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Technical Skills}
 \begin{technicalSkills}
-%
+
 \technicalSkillsItem{Programming Languages (competent)}
 {\item C
 \item C++
@@ -345,51 +326,51 @@ individual and as a key player in the organization's development.
 \item Perl
 \item sed
 \item PHP}
-%
+
 \technicalSkillsItem{Programming Languages}
 {\item Python
 \item JavaScript
 \item x86 Assembly Language
 \item VBA
 \item Prolog}
-%
+
 \technicalSkillsItem{Shells}
 {\item Bash}
-%
+
 \technicalSkillsItem{Embedded Programming}
 {\item FreeRTOS
 \item LwIP
 \item ThreadX
 \item NetX}
-%
+
 \technicalSkillsItem{Web-Based Development}
 {\item CSS
 \item HTML}
-%
+
 \technicalSkillsItem{Document markup}
 {\item \LaTeX}
-%
+
 \technicalSkillsItem{Databases}
 {\item Oracle
 \item MySQL
 \item postgreSQL}
-%
+
 \technicalSkillsItem{Operating Systems}
 {\item Microsoft Windows
 \item Linux
 \item Solaris}
-%
+
 \technicalSkillsItem{Debugging}
 {\item GDB
 \item Valgrind}
-%
+
 \technicalSkillsItem{Tools and Editors}
 {\item Git
 \item Subversion
 \item Eclipse IDE
 \item Vim
 \item gedit}
-%
+
 \end{technicalSkills}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -397,7 +378,7 @@ individual and as a key player in the organization's development.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Professional Experience}
 \begin{professionalExperience}
-%
+
 \begin{comment}
 % Software Engineering Graduate (Reserve Bank of Australia)
 \professionalExperience{February 2013}{present}
@@ -405,7 +386,7 @@ individual and as a key player in the organization's development.
 {TODO}
 {}
 \end{comment}
-%
+
 % Tutor (University of Sydney)
 \professionalExperienceItem{August 2012}{present}
 {Tutor}{University of Sydney}
@@ -414,7 +395,7 @@ individual and as a key player in the organization's development.
 and running three-hour laboratory session with up to 40 students in each 
 session.}
 {}
-%
+
 % Engineering/Data Analytics Intern (Freelancer.com)
 \professionalExperienceItem{July 2012}{present}
 {Engineering/Data Analytics Intern}{Freelancer.com}
@@ -423,7 +404,7 @@ by \company{Freelancer.com}. This included working with other staff to establish
 technical specifications, developing the software and performing data analysis 
 techniques to improve key business metrics.}
 {}
-%
+
 % Tutor (University of Sydney)
 \professionalExperienceItem{March 2012}{June 2012}
 {Tutor}{University of Sydney}
@@ -432,7 +413,7 @@ techniques to improve key business metrics.}
 position involved preparing and running two-hour tutoring session with up to 40 
 students in each session.}
 {}
-%
+
 % Software Engineering Intern (Broadcom)
 \professionalExperienceItem{November 2011}{February 2012}
 {Software Engineering Intern}{Broadcom}
@@ -452,7 +433,7 @@ Time Operating System.}
 \item NetX
 \item FreeRTOS
 \item LwIP}
-%
+
 % System Administrator (Audinate)
 \professionalExperienceItem{April 2011}{July 2012}
 {System Administrator}{Audinate}
@@ -473,7 +454,7 @@ servers.}
 \item PHP
 \item Apache
 \item Joomla}
-%
+
 % Industrial Student (TransGrid)
 \professionalExperienceItem{December 2010}{February 2011}
 {Industrial Student}{TransGrid}
@@ -492,7 +473,7 @@ to write some sophisticated temporal SQL queries.}
 {\item Microsoft Access
 \item Visual Basic for Applications (VBA)
 \item SQL}
-%
+
 % Industrial Student (Australian Energy Market Operator)
 \professionalExperienceItem{December 2009}{February 2010}
 {Industrial Student}{Australian Energy Market Operator}
@@ -512,7 +493,7 @@ greatly improve the running speeds of the tools.}
 {\item Oracle database management system
 \item Visual Basic for Applications (VBA)
 \item SQL}
-%
+
 % Industrial Student (Energy Australia)
 \professionalExperienceItem{February 2009}{February 2009}
 {Industrial Student}{Energy Australia}
@@ -525,7 +506,7 @@ developed.
 This work experience was a paid work experience offered as a part of my 
 \company{Australian Power Institute} bursary.}
 {}
-%
+
 % Customer Service Officer (The Hills Shire Council)
 \professionalExperienceItem{January 2009}{present}
 {Customer Service Officer}{The Hills Shire Council}
@@ -537,7 +518,7 @@ invoicing.
 My role also involved completing room set ups and pack downs, as well as 
 supervising events taking place in the council facilities.}
 {}
-%
+
 % Chief Pyrotechnician (Howard & Sons Pyrotechnics)
 \professionalExperienceItem{July 2008}{present}
 {Chief Pyrotechnician}{Howard \& Sons Pyrotechnics}
@@ -556,7 +537,7 @@ In addition to my role as a pyrotechnician, I am also a pyrotechnic display
 designer and am responsible for the planning, designing and choreography of a 
 pyrotechnics display to musical soundtracks.}
 {}
-%
+
 % Managing Director (Abstract Productions)
 \professionalExperienceItem{October 2008}{October 2011}
 {Managing Director}{Abstract Productions}
@@ -576,7 +557,7 @@ career.}
 \item Apache
 \item Unix
 \item MySQL}
-%
+
 \end{professionalExperience}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -584,17 +565,17 @@ career.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Education}
 \begin{education}
-%
+
 \educationItem{2008}{2012}
 {Bachelor of Engineering (Computer)}
 {University of Sydney}
 {}
-%
+
 \educationItem{2008}{2012}
 {Bachelor of Science (Computer Science)}
 {University of Sydney}
 {}
-%
+
 \educationItem{2002}{2007}
 {Higher School Certificate}
 {Cherrybrook Technology High School}
@@ -604,7 +585,7 @@ Mathematics Extension 1 &	97/100 \\
 Mathematics Extension 2 & 	94/100 \\
 Physics & 					95/100 \\
 UAI & 						99.25}
-%
+
 \end{education}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -624,32 +605,32 @@ shells up to 150 mm)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Qualifications and Training}
 \begin{qualifications}
-%
+
 \qualification{23 March 2011}{Leadership Training}
 {Participated in an internal leadership training program facilitated by 
 \company{The Hills Shire Council}.}
-%
+
 \qualification{28 February 2011}{Senior First Aid}
 {Statement of Attainment for fulfilling the requirements of HLTFA301B (Apply 
 First Aid) from the Health Training Package HLT07.}
-%
+
 \qualification{April 2010}{Safety Checking Electrical Appliances}
 {TAFE Statement in Safety Checking Electrical Appliances.}
-%
+
 \qualification{2 December 2008}{Responsible Service of Alcohol}
 {Statement of Attainment for fulfilling the requirements of THHBFB09B (Provide 
 Responsible Service of Alcohol) in partial completion of the Certificate II in 
 Hospitality (Operations) qualification.}
-%
+
 \qualification{26 February 2008}{Turning Shoppers into Buyers}
 {Certificate of achievement for participation in the \company{Jaycar} ``Turning 
 Shoppers into Buyers'' Retail Sales Skills training.}
-%
+
 \qualification{5 July 2007}{Defensive Driving}
 {Statement of Completion for completion of the Murcotts Level 1 Defensive 
 Driving Program based on the unit of competence TDTC197B (Drive Vehicle) from 
 the Transport \& Distribution Package TDT02.}
-%
+
 \end{qualifications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -657,17 +638,17 @@ the Transport \& Distribution Package TDT02.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Awards and Achievements}
 \begin{achievements}
-%
+
 \achievement{2008--2010}{Australian Power Institute Bursary}
 {Awarded the \company{Australian Power Institute} Power Engineering Bursary. 
 Rejected the bursary for the period 2011 onwards as I decided that this was not 
 a field in which I wanted to pursue a career.}
-%
+
 \achievement{2008--2009}{University of Sydney: Talented Students Program}
 {Admitted to the University of Sydney Talented Student Program, a program 
 designed to make special arrangements which offer an intellectual challenge to 
 elite students while they are studying at the University of Sydney.}
-%
+
 \achievement{2008}{University of Sydney: Advanced Engineering}
 {Admitted to the \educationInstitute{University of Sydney} Advanced Engineering 
 Program, designed to enable high achieving students to work on engineering and 
@@ -675,11 +656,11 @@ IT interdisciplinary project during their first semester.
 
 My group was awarded the ``Best Project'' and ``Best Presentation'' for our 
 Stirling engine project.}
-%
+
 \achievement{2007}{National Youth Science Forum}
 {Was one of six Australian students to be selected to attend the Genesis Science
 \& Technology Summer School in Auckland, New Zealand.}
-%
+
 \end{achievements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
