@@ -1,11 +1,25 @@
 # Makefile for compiling a LaTeX document split into multiple directories.
 #
 # Author:	Joshua Spence
-# Version:	1.0.0
-# Date:		11 July 2012
+# Version:	1.0.1
+# Date:		12 July 2012
 #
 # TO OBTAIN INSTRUCTIONS FOR USING THIS FILE, RUN:
 #    make help
+#===============================================================================
+# CHANGE LOG
+#   v1.0.1 (Unreleased)
+#       - Patched Chris Monson's Makefile (build/Makefile) to include a 
+#         `distclean' target.
+#       - Removed some useless files.
+#   v1.0.0 (11 July 2012)
+#       - Initial release
+#===============================================================================
+# TODO
+#   - Remove EXT_DIRS, IMG_DIRS, SRC_DIRS from Configuration.mk... think of a 
+#     better way to do this.
+#   - Add a make target or a shell script to allow this Makefile to update 
+#     itself (from Github).
 ################################################################################
 
 ################################################################################
@@ -13,8 +27,8 @@
 ################################################################################	
 FILENAME     := LaTeX Root Makefile
 AUTHOR       := Joshua Spence
-VERSION      := 1.0.0
-VERSION_DATE := 11 July 2012
+VERSION      := 1.0.1
+VERSION_DATE := 12 July 2012
 
 ################################################################################
 # External Programs
