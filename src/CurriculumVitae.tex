@@ -1,11 +1,16 @@
 \documentclass[10pt]{article}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KNOWN ISSUES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% * When tools are shown for previous jobs, table alignment is stuffed up.
+%------------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INCLUDES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[l2tabu,orthodox]{nag}
 
-\usepackage{commasep}				% for comma-separated lists
 \usepackage[inline]{enumitem} 		% for tweaking lists
 \usepackage{etoolbox} 				% for \ifstrempty, \ifdef
 \usepackage[margin=3cm]{geometry}	% extend page margins
@@ -27,7 +32,7 @@
 
 % Title details
 \title{\Huge{\textbf{\myName}}}
-\author{\Large{\underline{Cirriculum Vitae}}}
+\author{\Large{\underline{Curriculum Vitae}}}
 \date{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,7 +40,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Show the tools used at each previous job
 \newboolean{showTools}
-\setboolean{showTools}{true}
+\setboolean{showTools}{false}
 
 % Show the grades from my education
 \newboolean{showGrades}
@@ -74,7 +79,7 @@
 %================================================%
 % \begin{personalDetails}
 % \personalDetailsItem{itemName}{itemValue}
-% \personalDetailsItemWithSpace{itemName}{itemValue}{spacing}
+% \personalDetailsItemWithSpace{itemName}{itemValue}
 % \end{personalDetails}
 %================================================%
 \newenvironment{personalDetails}%
@@ -82,16 +87,8 @@
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
 %
-\newcommand\personalDetailsItem[2]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##2 %
-\def\separator{\\}%
-}%
-\newcommand\personalDetailsItemWithSpace[3]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##2 %
-\def\separator{\vspace{##3em} \\}%
-}%
+\newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+\newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }
@@ -109,12 +106,10 @@
 \def\rwidth{0.64\textwidth}%
 %
 \newcommand\technicalSkillsItem[2]{%
-\ifdef{\separator}{\separator}{}%
 ##1 & %
-\begin{commalist} %
+\begin{commalist}%
 ##2 %
-\end{commalist}.%
-\def\separator{\vspace{0.5em} \\}%
+\end{commalist}. \hfill \\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -133,7 +128,6 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\professionalExperienceItem[6]{%
-\ifdef{\separator}{\separator}{}%
 % Employment period
 \ifthenelse{\boolean{showTools}}%
 	{\ifstrempty{##6}%
@@ -149,21 +143,22 @@
 & ##5 %
 \ifthenelse{\boolean{showTools}}%
 	{\ifstrempty{##6}%
-		{}%
-		{\vspace{1em} \\ %
-			& \textbf{Tools:} %
-			\begin{itemize}[itemsep=0pt]%
+		{\empty}%
+		{\\[1em]%
+			& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
 			##6 %
 			\end{itemize}%
 		}%
 	}%
-	{}%
-\def\separator{\vspace{1em} \\}%
+	{\empty}%
+\\[1em]%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
 }
-{\end{longtable}}
+{%
+\end{longtable}%
+}
 %------------------------------------------------%
 
 %================================================%
@@ -177,7 +172,6 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\educationItem[5]{%
-\ifdef{\separator}{\separator}{}%
 % Education period
 \ifthenelse{\boolean{showGrades}}%
 	{\ifstrempty{##5}%
@@ -198,7 +192,7 @@
 		}%
 	}%
 	{}%
-\def\separator{\vspace{0.5em} \\}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -216,11 +210,7 @@
 \def\lwidth{0.25\textwidth}%
 \def\rwidth{0.69\textwidth}%
 %
-\newcommand\license[3]{%
-\ifdef{\separator}{\separator}{}%
-##1 & ##3 %
-\def\separator{\\}%
-}%
+\newcommand\license[3]{##1 & ##3 \\}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }
@@ -238,11 +228,10 @@
 \def\rwidth{0.74\textwidth}%
 %
 \newcommand\qualification[3]{%
-\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\* %
 & ##3 %
-\def\separator{\vspace{0.5em} \\}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -261,11 +250,10 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\achievement[3]{%
-\ifdef{\separator}{\separator}{}%
 \multirow{2}{\lwidth}{##1}%
 & \textbf{##2} \\* %
 & ##3 %
-\def\separator{\vspace{0.5em} \\}%
+\\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -299,8 +287,8 @@ individual and as a key player in the organization's development.
 \begin{personalDetails}
 \personalDetailsItem{Name}{\myName}
 \personalDetailsItem{Date of Birth}{\myDOB}
-\personalDetailsItemWithSpace{Address}{\myAddress{\newline}}{1}
-\personalDetailsItemWithSpace{Mobile}{\myMobile}{1}
+\personalDetailsItemWithSpace{Address}{\myAddress{\newline}}
+\personalDetailsItemWithSpace{Mobile}{\myMobile}
 \personalDetailsItem{Email}{\myEmail}
 \personalDetailsItem{LinkedIn}{\myLinkedIn}
 \personalDetailsItem{GitHub}{\myGithub}
@@ -328,17 +316,35 @@ individual and as a key player in the organization's development.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Technical Skills}
 \begin{technicalSkills}
-\technicalSkillsItem{Programming Languages}
+
+\technicalSkillsItem{Programming Languages (competent)}
 {\item C
 \item C++
 \item Java
+\item \LaTeX
+\item MATLAB
 \item Perl
-\item Python}
+\item sed
+\item PHP}
+
+\technicalSkillsItem{Programming Languages}
+{\item Python
+\item JavaScript
+\item x86 Assembly Language
+\item VBA
+\item Prolog}
+
+\technicalSkillsItem{Shells}
+{\item Bash}
+
+\technicalSkillsItem{Embedded Programming}
+{\item FreeRTOS
+\item LwIP
+\item ThreadX
+\item NetX}
 
 \technicalSkillsItem{Web-Based Development}
-{\item PHP
-\item JavaScript
-\item CSS
+{\item CSS
 \item HTML}
 
 \technicalSkillsItem{Document markup}
@@ -354,10 +360,16 @@ individual and as a key player in the organization's development.
 \item Linux
 \item Solaris}
 
-\technicalSkillsItem{Tools}
+\technicalSkillsItem{Debugging}
+{\item GDB
+\item Valgrind}
+
+\technicalSkillsItem{Tools and Editors}
 {\item Git
 \item Subversion
-\item Eclipse IDE}
+\item Eclipse IDE
+\item Vim
+\item gedit}
 
 \end{technicalSkills}
 
@@ -366,6 +378,7 @@ individual and as a key player in the organization's development.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Professional Experience}
 \begin{professionalExperience}
+
 \begin{comment}
 % Software Engineering Graduate (Reserve Bank of Australia)
 \professionalExperience{February 2013}{present}
@@ -373,6 +386,7 @@ individual and as a key player in the organization's development.
 {TODO}
 {}
 \end{comment}
+
 % Tutor (University of Sydney)
 \professionalExperienceItem{August 2012}{present}
 {Tutor}{University of Sydney}
@@ -543,6 +557,7 @@ career.}
 \item Apache
 \item Unix
 \item MySQL}
+
 \end{professionalExperience}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -550,6 +565,7 @@ career.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Education}
 \begin{education}
+
 \educationItem{2008}{2012}
 {Bachelor of Engineering (Computer)}
 {University of Sydney}
@@ -569,6 +585,7 @@ Mathematics Extension 1 &	97/100 \\
 Mathematics Extension 2 & 	94/100 \\
 Physics & 					95/100 \\
 UAI & 						99.25}
+
 \end{education}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -588,6 +605,7 @@ shells up to 150 mm)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Qualifications and Training}
 \begin{qualifications}
+
 \qualification{23 March 2011}{Leadership Training}
 {Participated in an internal leadership training program facilitated by 
 \company{The Hills Shire Council}.}
@@ -612,6 +630,7 @@ Shoppers into Buyers'' Retail Sales Skills training.}
 {Statement of Completion for completion of the Murcotts Level 1 Defensive 
 Driving Program based on the unit of competence TDTC197B (Drive Vehicle) from 
 the Transport \& Distribution Package TDT02.}
+
 \end{qualifications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -619,6 +638,7 @@ the Transport \& Distribution Package TDT02.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Awards and Achievements}
 \begin{achievements}
+
 \achievement{2008--2010}{Australian Power Institute Bursary}
 {Awarded the \company{Australian Power Institute} Power Engineering Bursary. 
 Rejected the bursary for the period 2011 onwards as I decided that this was not 
@@ -640,6 +660,7 @@ Stirling engine project.}
 \achievement{2007}{National Youth Science Forum}
 {Was one of six Australian students to be selected to attend the Genesis Science
 \& Technology Summer School in Auckland, New Zealand.}
+
 \end{achievements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
