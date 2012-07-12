@@ -1,0 +1,16 @@
+*.aux
+*-blx.bib
+*.bbl
+*.blg
+*.d
+*.fls
+*.glg
+*.glo
+*.gls
+*.ist
+*.log
+*.make
+*.out
+*.run.xml
+*.temp
+*.toc
