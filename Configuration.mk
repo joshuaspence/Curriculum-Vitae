@@ -9,5 +9,6 @@ SRC_DIRS   := src
 build_persist := 
 
 # The location of the LaTeX sources files
-source_extensions := .tex
+source_extensions := .sty .tex
+.sty_directories  := $(SRC_DIRS)
 .tex_directories  := $(SRC_DIRS)

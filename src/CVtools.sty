@@ -1,0 +1,256 @@
+\ProvidesPackage{CVtools}
+
+\usepackage[inline]{enumitem} 		% for tweaking lists
+\usepackage{etoolbox} 				% for \ifstrempty, \ifdef
+\usepackage{ifthen}					% for \ifthenelse
+\usepackage{longtable} 				% for tables that span more than one page
+\usepackage{multirow} 				% for table columns that span more than one row
+\usepackage{tabularx} 				% for simple column stretching
+\usepackage{xcolor} 				% for colours
+
+%================================================%
+% For table styling
+%================================================%
+\definecolor{lightgray}{gray}{0.8}
+\newcolumntype{L}[1]{>{\raggedleft}p{#1}}
+\newcolumntype{R}[1]{p{#1}}
+\newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+%------------------------------------------------%
+
+%================================================%
+% Comma-separated list
+%================================================%
+\newlist{commalist}{description*}{4}
+\setlist[commalist]{itemjoin={{,}},itemjoin*={{ and}},afterlabel=\unskip{{~}}}
+%------------------------------------------------%
+
+%================================================%
+% Custom formatting
+%================================================%
+\newcommand\jobTitle[1]{\emph{#1}}
+\newcommand\company[1]{``#1''}
+\newcommand\qualificationName[1]{\emph{#1}}
+\newcommand\educationInstitute[1]{``#1''}
+%------------------------------------------------%
+
+%================================================%
+% \begin{personalDetails}
+% \personalDetailsItem{itemName}{itemValue}
+% \personalDetailsItemWithSpace{itemName}{itemValue}
+% \end{personalDetails}
+%================================================%
+\newenvironment{personalDetails}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+\newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{technicalSkills}
+% \technicalSkillsItem}{itemName}{itemValues}
+% \end{technicalSkills}
+%================================================%
+\newenvironment{technicalSkills}%
+{%
+\def\lwidth{0.3\textwidth}%
+\def\rwidth{0.64\textwidth}%
+%
+\newcommand\technicalSkillsItem[2]{%
+##1 & %
+\begin{commalist}%
+##2 %
+\end{commalist}.%
+% Phantom prevents the comma list from expanding to the whole row width.
+\hfill \phantom{} \\[0.5em]%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{professionalExperience}
+% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{tools}
+% \end{professionalExperience}
+%================================================%
+\newenvironment{professionalExperience}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+% Set to true if showTools is true and if the current 
+% \professionalExperienceItem has some tools to display. Otherwise false.
+\newboolean{@shouldShowTools}
+%
+\newcommand\professionalExperienceItem[6]{%
+% Check if we should display tools
+\ifthenelse{\boolean{showTools}}%
+	{\ifstrempty{##6}%
+		{% showTools is true, but this \professionalExperienceItem has no tools
+		 % to display.
+			\def\numRows{2}%
+			\setboolean{@shouldShowTools}{false}%
+		}%
+		{% showTools is true and this \professionalExperienceItem has tools to
+		 % display.
+			\def\numRows{3}%
+			\setboolean{@shouldShowTools}{true}%
+		}%
+	}%
+	{% showTools is false.
+		\def\numRows{2}%
+		\setboolean{@shouldShowTools}{false}%
+	}%
+%
+% Employment period
+\multirow{\numRows}{\lwidth}{##1 -- ##2}%
+%
+% Position and company
+& \textbf{##3 (##4)}\\*%
+%
+% Job description
+& ##5 %
+%
+% Tools
+\ifthenelse{\boolean{@shouldShowTools}}%
+	{%
+		\\[1em]%
+		& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
+		##6 %
+		\end{itemize}%
+	}%
+	{}%
+\\[1em]%
+}%
+%
+\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{%
+\end{longtable}%
+}
+%------------------------------------------------%
+
+%================================================%
+% \begin{education}
+% \educationItem{beginYear}{endYear}{name}{institution}{\educationGrade{subject}{grade} ...}
+% \end{education}
+%================================================%
+\newenvironment{education}%
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+% Set to true if showGrades is true and if the current \educationItem has some 
+% grades to display. Otherwise false.
+\newboolean{@shouldShowGrades}
+%
+\newcommand\educationGrade[2]{##1 & ##2 \\}%
+%
+\newcommand\educationItem[5]{%
+% Check if we should display tools
+\ifthenelse{\boolean{showGrades}}%
+	{\ifstrempty{##5}%
+		{% showGrades is true, but this \educationItem has no grades to display.
+			\def\numRows{1}%
+			\setboolean{@shouldShowGrades}{false}%
+		}%
+		{% showGrades is true and this \educationItem has grades to display.
+			\def\numRows{2}%
+			\setboolean{@shouldShowGrades}{true}%
+		}%
+	}%
+	{% showGrades is false.
+		\def\numRows{1}%
+		\setboolean{@shouldShowGrades}{false}%
+	}%
+%
+% Education period
+\multirow{\numRows}{\lwidth}{##1 -- ##2}%
+%
+% Name and institution
+& \textbf{##3 (##4)}%
+%
+% Grades
+\ifthenelse{\boolean{@shouldShowGrades}}%
+	{%
+		\\* %
+		& \begin{tabularx}{\rwidth}{Xr} %
+		##5 %
+		\end{tabularx} %
+	}%
+	{}%
+\\[0.5em]%
+}%
+%
+\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{licenses}
+% \license{name}{provider}{description}
+% \end{licenses}
+%================================================%
+\newenvironment{licenses}
+{%
+\def\lwidth{0.25\textwidth}%
+\def\rwidth{0.69\textwidth}%
+%
+\newcommand\license[3]{##1 & ##3 \\}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{qualifications}
+% \qualification{date}{name}{description}
+% \end{qualifications}
+%================================================%
+\newenvironment{qualifications}%
+{%
+\def\lwidth{0.20\textwidth}%
+\def\rwidth{0.74\textwidth}%
+%
+\newcommand\qualification[3]{%
+\multirow{2}{\lwidth}{##1}%
+& \textbf{##2} \\*%
+& ##3 \\[0.5em]%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
+
+%================================================%
+% \begin{achievements}
+% \achievement{date}{name}{description}
+% \end{achievements}
+%================================================%
+\newenvironment{achievements}
+{%
+\def\lwidth{0.16\textwidth}%
+\def\rwidth{0.78\textwidth}%
+%
+\newcommand\achievement[3]{%
+\multirow{2}{\lwidth}{##1}%
+& \textbf{##2} \\* %
+& ##3 %
+\\[0.5em]%
+}%
+%
+\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}
+{\end{longtable}}
+%------------------------------------------------%
