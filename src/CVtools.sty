@@ -1,3 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KNOWN ISSUES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% * The multirow commands in the qualifications and achievements environments 
+%   should be two rows, but doing this causes the left and right columns to 
+%   loose alignment.
+%------------------------------------------------------------------------------%
+
 \ProvidesPackage{CVtools}
 
 \usepackage[inline]{enumitem} 		% for tweaking lists
@@ -223,9 +231,9 @@
 \def\rwidth{0.74\textwidth}%
 %
 \newcommand\qualification[3]{%
-\multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\*%
-& ##3 \\[0.5em]%
+\multirow{1}{\lwidth}{##1}%
+& \textbf{##2} \\*
+& ##3 \\[0.5em]
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -244,10 +252,9 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\achievement[3]{%
-\multirow{2}{\lwidth}{##1}%
-& \textbf{##2} \\* %
-& ##3 %
-\\[0.5em]%
+\multirow{1}{\lwidth}{##1}%
+& \textbf{##2} \\*
+& ##3 \\[0.5em]
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
