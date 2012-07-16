@@ -1,20 +1,44 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------------------------%
+% cvtools.sty
+%
+% Copyright (c) 2012 by Joshua Spence.
+% All Rights Reserved.
+%------------------------------------------------------------------------------%
+% TODO
+%~~~~~~
+% * None
+%
 % KNOWN ISSUES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~~~~~
 % * The multirow commands in the qualifications and achievements environments 
 %   should be two rows, but doing this causes the left and right columns to 
 %   loose alignment.
+% * Boolean values 'shouldshowtools' and 'shouldshowgrades' are not working.
+%
 %------------------------------------------------------------------------------%
 
-\ProvidesPackage{CVtools}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cvtools}[2012/07/16 v1.0.0]
 
-\usepackage[inline]{enumitem} 		% for tweaking lists
-\usepackage{etoolbox} 				% for \ifstrempty, \ifdef
-\usepackage{ifthen}					% for \ifthenelse
-\usepackage{longtable} 				% for tables that span more than one page
-\usepackage{multirow} 				% for table columns that span more than one row
-\usepackage{tabularx} 				% for simple column stretching
-\usepackage{xcolor} 				% for colours
+\RequirePackage[inline]{enumitem}	% for tweaking lists
+\RequirePackage{etoolbox} 			% for \ifstrempty, \ifdef
+\RequirePackage{ifthen}				% for \ifthenelse
+\RequirePackage{longtable} 			% for tables that span more than one page
+\RequirePackage{multirow} 			% for table columns that span more than one row
+\RequirePackage{tabularx} 			% for simple column stretching
+\RequirePackage{xcolor} 			% for colours
+
+%================================================%
+% Declare options
+%================================================%
+\newif\if@showtools
+\newif\if@showgrades
+
+\DeclareOption{showtools}{\@showtoolstrue}
+\DeclareOption{showgrades}{\@showgradestrue}
+\DeclareOption*{\PackageWarning{cvtools}{Unknown option `\CurrentOption'}}
+
+\ProcessOptions
 
 %================================================%
 % For table styling
@@ -94,32 +118,28 @@
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
 %
-% Set to true if showTools is true and if the current 
-% \professionalExperienceItem has some tools to display. Otherwise false.
-\newboolean{@shouldShowTools}
-%
 \newcommand\professionalExperienceItem[6]{%
 % Check if we should display tools
-\ifthenelse{\boolean{showTools}}%
-	{\ifstrempty{##6}%
+\if@showtools
+	\ifstrempty{##6}%
 		{% showTools is true, but this \professionalExperienceItem has no tools
 		 % to display.
-			\def\numRows{2}%
-			\setboolean{@shouldShowTools}{false}%
+			\def\@numRows{2}%
+			\def\@shouldshowtools{0}%
 		}%
 		{% showTools is true and this \professionalExperienceItem has tools to
 		 % display.
-			\def\numRows{3}%
-			\setboolean{@shouldShowTools}{true}%
+			\def\@numRows{3}%
+			\def\@shouldshowtools{1}%
 		}%
-	}%
-	{% showTools is false.
-		\def\numRows{2}%
-		\setboolean{@shouldShowTools}{false}%
-	}%
+\else
+	% showTools is false.
+	\def\@numRows{2}%
+	\def\@shouldshowtools{0}%
+\fi
 %
 % Employment period
-\multirow{\numRows}{\lwidth}{##1 -- ##2}%
+\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
 %
 % Position and company
 & \textbf{##3 (##4)}\\*%
@@ -128,7 +148,7 @@
 & ##5 %
 %
 % Tools
-\ifthenelse{\boolean{@shouldShowTools}}%
+\ifthenelse{\equal{@shouldshowtools}{1}}%
 	{%
 		\\[1em]%
 		& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
@@ -156,38 +176,34 @@
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
 %
-% Set to true if showGrades is true and if the current \educationItem has some 
-% grades to display. Otherwise false.
-\newboolean{@shouldShowGrades}
-%
 \newcommand\educationGrade[2]{##1 & ##2 \\}%
 %
 \newcommand\educationItem[5]{%
 % Check if we should display tools
-\ifthenelse{\boolean{showGrades}}%
-	{\ifstrempty{##5}%
+\if@showgrades
+	\ifstrempty{##5}%
 		{% showGrades is true, but this \educationItem has no grades to display.
-			\def\numRows{1}%
-			\setboolean{@shouldShowGrades}{false}%
+			\def\@numRows{1}%
+			\def\@shouldshowgrades{0}
 		}%
 		{% showGrades is true and this \educationItem has grades to display.
-			\def\numRows{2}%
-			\setboolean{@shouldShowGrades}{true}%
+			\def\@numRows{2}%
+			\def\@shouldshowgrades{1}
 		}%
-	}%
-	{% showGrades is false.
-		\def\numRows{1}%
-		\setboolean{@shouldShowGrades}{false}%
-	}%
+\else
+	% showGrades is false.
+	\def\@numRows{1}%
+	\def\@shouldshowgrades{0}
+\fi
 %
 % Education period
-\multirow{\numRows}{\lwidth}{##1 -- ##2}%
+\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
 %
 % Name and institution
 & \textbf{##3 (##4)}%
 %
 % Grades
-\ifthenelse{\boolean{@shouldShowGrades}}%
+\ifthenelse{\equal{@shouldshowgrades}{1}}%
 	{%
 		\\* %
 		& \begin{tabularx}{\rwidth}{Xr} %
