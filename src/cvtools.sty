@@ -124,18 +124,18 @@
 	\ifstrempty{##6}%
 		{% showTools is true, but this \professionalExperienceItem has no tools
 		 % to display.
-			\def\@numRows{2}%
-			\def\@shouldshowtools{0}%
+			\gdef\@numRows{2}%
+			\gdef\@shouldshowtools{0}%
 		}%
 		{% showTools is true and this \professionalExperienceItem has tools to
 		 % display.
-			\def\@numRows{3}%
-			\def\@shouldshowtools{1}%
+			\gdef\@numRows{3}%
+			\gdef\@shouldshowtools{1}%
 		}%
 \else
 	% showTools is false.
-	\def\@numRows{2}%
-	\def\@shouldshowtools{0}%
+	\gdef\@numRows{2}%
+	\gdef\@shouldshowtools{0}%
 \fi
 %
 % Employment period
@@ -148,7 +148,7 @@
 & ##5 %
 %
 % Tools
-\ifthenelse{\equal{@shouldshowtools}{1}}%
+\ifthenelse{\equal{\@shouldshowtools}{1}}%
 	{%
 		\\[1em]%
 		& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
@@ -180,30 +180,31 @@
 %
 \newcommand\educationItem[5]{%
 % Check if we should display tools
-\if@showgrades
+\if@showgrades%
 	\ifstrempty{##5}%
 		{% showGrades is true, but this \educationItem has no grades to display.
-			\def\@numRows{1}%
-			\def\@shouldshowgrades{0}
+			\gdef\@numRows{1}%
+			\gdef\@shouldshowgrades{0}%
 		}%
 		{% showGrades is true and this \educationItem has grades to display.
-			\def\@numRows{2}%
-			\def\@shouldshowgrades{1}
+			\gdef\@numRows{2}%
+			\gdef\@shouldshowgrades{1}%
 		}%
 \else
 	% showGrades is false.
-	\def\@numRows{1}%
-	\def\@shouldshowgrades{0}
+	\gdef\@numRows{1}%
+	\gdef\@shouldshowgrades{0}%
 \fi
 %
 % Education period
-\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
+%\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
+##1 -- ##2 %
 %
 % Name and institution
 & \textbf{##3 (##4)}%
 %
 % Grades
-\ifthenelse{\equal{@shouldshowgrades}{1}}%
+\ifthenelse{\equal{\@shouldshowgrades}{1}}%
 	{%
 		\\* %
 		& \begin{tabularx}{\rwidth}{Xr} %
