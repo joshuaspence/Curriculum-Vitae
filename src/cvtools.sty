@@ -106,13 +106,15 @@
 
 %================================================%
 % \begin{professionalExperience}
-% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{tools}
+% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{\professionalTool{tool} ...}
 % \end{professionalExperience}
 %================================================%
 \newenvironment{professionalExperience}%
 {%
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
+%
+\newcommand\professionalTool[1]{\item ##1}%
 %
 \newcommand\professionalExperienceItem[6]{%
 % Check if we should display tools
