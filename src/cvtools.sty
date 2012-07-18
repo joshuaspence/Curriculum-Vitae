@@ -10,10 +10,7 @@
 %
 % KNOWN ISSUES
 %~~~~~~~~~~~~~~
-% * The multirow commands in the qualifications and achievements environments 
-%   should be two rows, but doing this causes the left and right columns to 
-%   loose alignment.
-% * Boolean values 'shouldshowtools' and 'shouldshowgrades' are not working.
+% * None
 %
 %------------------------------------------------------------------------------%
 
@@ -24,7 +21,6 @@
 \RequirePackage{etoolbox} 			% for \ifstrempty, \ifdef
 \RequirePackage{ifthen}				% for \ifthenelse
 \RequirePackage{longtable} 			% for tables that span more than one page
-\RequirePackage{multirow} 			% for table columns that span more than one row
 \RequirePackage{tabularx} 			% for simple column stretching
 \RequirePackage{xcolor} 			% for colours
 
@@ -124,22 +120,19 @@
 	\ifstrempty{##6}%
 		{% showTools is true, but this \professionalExperienceItem has no tools
 		 % to display.
-			\gdef\@numRows{2}%
 			\gdef\@shouldshowtools{0}%
 		}%
 		{% showTools is true and this \professionalExperienceItem has tools to
 		 % display.
-			\gdef\@numRows{3}%
 			\gdef\@shouldshowtools{1}%
 		}%
 \else
 	% showTools is false.
-	\gdef\@numRows{2}%
 	\gdef\@shouldshowtools{0}%
 \fi
 %
 % Employment period
-\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
+\smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
 %
 % Position and company
 & \textbf{##3 (##4)}\\*%
@@ -183,22 +176,18 @@
 \if@showgrades%
 	\ifstrempty{##5}%
 		{% showGrades is true, but this \educationItem has no grades to display.
-			\gdef\@numRows{1}%
 			\gdef\@shouldshowgrades{0}%
 		}%
 		{% showGrades is true and this \educationItem has grades to display.
-			\gdef\@numRows{2}%
 			\gdef\@shouldshowgrades{1}%
 		}%
 \else
 	% showGrades is false.
-	\gdef\@numRows{1}%
 	\gdef\@shouldshowgrades{0}%
 \fi
 %
 % Education period
-%\multirow{\@numRows}{\lwidth}{##1 -- ##2}%
-##1 -- ##2 %
+\smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
 %
 % Name and institution
 & \textbf{##3 (##4)}%
@@ -248,7 +237,7 @@
 \def\rwidth{0.74\textwidth}%
 %
 \newcommand\qualification[3]{%
-\multirow{1}{\lwidth}{##1}%
+\smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
 & \textbf{##2} \\*
 & ##3 \\[0.5em]
 }%
@@ -269,7 +258,7 @@
 \def\rwidth{0.78\textwidth}%
 %
 \newcommand\achievement[3]{%
-\multirow{1}{\lwidth}{##1}%
+\smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
 & \textbf{##2} \\*
 & ##3 \\[0.5em]
 }%
