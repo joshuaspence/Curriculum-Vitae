@@ -91,9 +91,9 @@
 \def\rwidth{0.64\textwidth}%
 %
 \newcommand\technicalSkillsItem[2]{%
-##1 & %
-\begin{commalist}%
-##2 %
+##1 &%
+\begin{commalist} 
+##2%
 \end{commalist}.%
 % Phantom prevents the comma list from expanding to the whole row width.
 \hfill \null \\[0.5em]%
@@ -140,14 +140,14 @@
 & \textbf{##3 (##4)}\\*%
 %
 % Job description
-& ##5 %
+& ##5%
 %
 % Tools
 \ifthenelse{\equal{\@shouldshowtools}{1}}%
 	{%
 		\\[1em]%
 		& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
-		##6 %
+		##6%
 		\end{itemize}%
 	}%
 	{}%
@@ -197,10 +197,10 @@
 % Grades
 \ifthenelse{\equal{\@shouldshowgrades}{1}}%
 	{%
-		\\* %
-		& \begin{tabularx}{\rwidth}{Xr} %
-		##5 %
-		\end{tabularx} %
+		\\*%
+		& \begin{tabularx}{\rwidth}{Xr}%
+		##5%
+		\end{tabularx}%
 	}%
 	{}%
 \\[0.5em]%
@@ -240,8 +240,8 @@
 %
 \newcommand\qualificationItem[3]{%
 \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-& \textbf{##2} \\*
-& ##3 \\[0.5em]
+& \textbf{##2} \\*%
+& ##3 \\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
@@ -261,8 +261,8 @@
 %
 \newcommand\achievement[3]{%
 \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-& \textbf{##2} \\*
-& ##3 \\[0.5em]
+& \textbf{##2} \\*%
+& ##3 \\[0.5em]%
 }%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
