@@ -11,7 +11,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[l2tabu,orthodox]{nag}
 
-\usepackage[showgrades,showtools]{cvtools} % my CV styling stuff
+\usepackage[showgrades]{cvtools} % my CV styling stuff
 \usepackage[margin=3cm]{geometry}	% extend page margins
 \usepackage{graphicx} 				% for graphics
 \usepackage[hidelinks]{hyperref} 	% for hyperlinks
@@ -95,69 +95,91 @@ individual and as a key player in the organization's development.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Technical Skills
+%
+% \technicalSkillsItem}{itemName}{itemValues}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Technical Skills}
 \begin{technicalSkills}
 
 \technicalSkillsItem{Programming Languages}
-{\item C
-\item C++
-\item Java
-\item \LaTeX
-\item MATLAB
-\item Perl
-\item sed
-\item PHP
-\item Python
-\item JavaScript
-\item x86 Assembly Language
-\item VBA}
+{
+    \item C
+    \item C++
+    \item Java
+    \item \LaTeX
+    \item MATLAB
+    \item Perl
+    \item sed
+    \item PHP
+    \item Python
+    \item JavaScript
+    \item x86 Assembly Language
+    \item VBA
+}
 
 \technicalSkillsItem{Shells}
-{\item Bash}
+{
+    \item Bash
+}
 
 \technicalSkillsItem{Embedded Programming}
-{\item FreeRTOS
-\item LwIP
-\item ThreadX
-\item NetX}
+{
+    \item FreeRTOS
+    \item LwIP
+    \item ThreadX
+    \item NetX
+}
 
 \technicalSkillsItem{Web-Based Development}
-{\item HTML
-\item CSS
-\item JavaScript
-\item Apache
-\item NGINX}
+{
+    \item HTML
+    \item CSS
+    \item JavaScript
+    \item Apache
+    \item NGINX
+}
 
 \technicalSkillsItem{Document markup}
-{\item \LaTeX
-\item WYSIWYG editors (such as ``Microsoft Word'')}
+{
+    \item \LaTeX
+    \item WYSIWYG editors (such as ``Microsoft Word'')
+}
 
 \technicalSkillsItem{Databases}
-{\item Oracle
-\item MySQL
-\item postgreSQL}
+{
+    \item Oracle
+    \item MySQL
+    \item postgreSQL
+}
 
 \technicalSkillsItem{Operating Systems}
-{\item Microsoft Windows
-\item Linux
-\item Solaris}
+{
+    \item Microsoft Windows
+    \item Linux
+    \item Solaris
+}
 
 \technicalSkillsItem{Debugging}
-{\item GDB
-\item Valgrind}
+{
+    \item GDB
+    \item Valgrind
+}
 
 \technicalSkillsItem{Tools and Editors}
-{\item Git
-\item Subversion
-\item Eclipse IDE
-\item Vim
-\item gedit}
+{
+    \item Git
+    \item Subversion
+    \item Eclipse IDE
+    \item Vim
+    \item gedit
+}
 
 \end{technicalSkills}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Professional experience
+%
+% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{\professionalTool{tool} ...}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Professional Experience}
 \begin{professionalExperience}
@@ -179,11 +201,22 @@ by \company{Freelancer.com}. This included working with other staff to establish
 technical specifications, developing the software and performing data analysis 
 techniques to improve key business metrics.}
 {
-\professionalTool{PHP}
-\professionalTool{CSS}
-\professionalTool{JavaScript}
-\professionalTool{NGINX}
-\professionalTool{Git}
+    % Programming languages
+    \professionalTool{PHP}
+    
+    % Web development
+    \professionalTool{CSS}
+    \professionalTool{JavaScript}
+    \professionalTool{HTML}
+    \professionalTool{AJAX}
+    \professionalTool{jQuery}
+    \professionalTool{Twitter Bootstrap}
+    
+    % Web administration
+    \professionalTool{NGINX}
+    
+    % Tools and editors
+    \professionalTool{Git}
 }
 
 % Tutor (University of Sydney)
@@ -207,14 +240,23 @@ I completed two primary tasks during my employment. The major task was porting
 system. In addition, I added the capability to trace thread execution of a Real 
 Time Operating System.}
 {
-\professionalTool{C}
-\professionalTool{Eclipse IDE}
-\professionalTool{Subversion}
-\professionalTool{GDB}
-\professionalTool{ThreadX}
-\professionalTool{NetX}
-\professionalTool{FreeRTOS}
-\professionalTool{LwIP}
+    % Programming languages
+    \professionalTool{C}
+    \professionalTool{C++}
+    \professionalTool{Perl}
+    
+    % Embedded programming
+    \professionalTool{ThreadX}
+    \professionalTool{NetX}
+    \professionalTool{FreeRTOS}
+    \professionalTool{LwIP}
+    
+    % Debugging
+    \professionalTool{GDB}
+    
+    % Tools and editors
+    \professionalTool{Eclipse IDE}
+    \professionalTool{Subversion}
 }
 
 % System Administrator (Audinate)
@@ -229,15 +271,30 @@ Through this position, I gained a wide range of experience including website
 administration, Unix administration and designing and building dedicated Unix
 servers.}
 {
-\professionalTool{Ubuntu Server}
-\professionalTool{Sun Solaris}
-\professionalTool{Zettabyte File System (ZFS)}
-\professionalTool{Zimbra}
-\professionalTool{HTML}
-\professionalTool{CSS}
-\professionalTool{PHP}
-\professionalTool{Apache}
-\professionalTool{Joomla}
+    % Programming languages
+    \professionalTool{PHP}
+    
+    % Shells
+    \professionalTool{bash}
+    
+    % Web development
+    \professionalTool{HTML}
+    \professionalTool{CSS}
+    \professionalTool{Joomla}
+    
+    % Web administration
+    \professionalTool{Apache}
+    
+    % Database
+    \professionalTool{MySQL}
+    
+    % Operating systems
+    \professionalTool{Ubuntu Server}
+    \professionalTool{Sun Solaris}
+    
+    % Other
+    \professionalTool{Zettabyte File System (ZFS)}
+    \professionalTool{Zimbra}
 }
 
 % Industrial Student (TransGrid)
@@ -256,9 +313,12 @@ tracking project completion. Whilst VBA is not a sophisticated or complicated
 programming language, this was an interesting experience in which I was required
 to write some sophisticated temporal SQL queries.}
 {
-\professionalTool{Microsoft Access}
-\professionalTool{Visual Basic for Applications (VBA)}
-\professionalTool{SQL}
+    % Programming languages
+    \professionalTool{Visual Basic for Applications (VBA)}
+    \professionalTool{SQL}
+    
+    % Databases
+    \professionalTool{Microsoft Access}
 }
 
 % Industrial Student (Australian Energy Market Operator)
@@ -278,9 +338,12 @@ macro-enabled spreadsheets used by the team to perform important calculations. I
 was able to improve the accuracy of the data reported by the spreadsheet and 
 greatly improve the running speeds of the tools.}
 {
-\professionalTool{Oracle database management system}
-\professionalTool{Visual Basic for Applications (VBA)}
-\professionalTool{SQL}
+    % Programming languages
+    \professionalTool{Visual Basic for Applications (VBA)}
+    \professionalTool{SQL}
+    
+    % Databases
+    \professionalTool{Oracle}
 }
 
 % Industrial Student (Energy Australia)
@@ -341,18 +404,30 @@ developing and maintaining the business' website. I decided to end my commitment
 to the business as it was the not the field in which I intended to pursue a 
 career.}
 {
-\professionalTool{HTML}
-\professionalTool{PHP}
-\professionalTool{CSS}
-\professionalTool{Apache}
-\professionalTool{Unix}
-\professionalTool{MySQL}
+    % Programming languages
+    \professionalTool{PHP}
+
+    % Web development
+    \professionalTool{HTML}
+    \professionalTool{CSS}
+    \professionalTool{jQuery}
+
+    % Web administration
+    \professionalTool{Apache}
+    
+    % Operating systems
+    \professionalTool{Unix}
+    
+    % Databases
+    \professionalTool{MySQL}
 }
 
 \end{professionalExperience}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Education
+%
+% \educationItem{beginYear}{endYear}{name}{institution}{\educationGrade{subject}{grade} ...}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Education}
 \begin{education}
@@ -371,56 +446,66 @@ career.}
 {Higher School Certificate}
 {Cherrybrook Technology High School}
 {
-\educationGrade{Chemistry}{90/100}
-\educationGrade{English (Advanced)}{88/100}
-\educationGrade{Mathematics Extension 1}{97/100}
-\educationGrade{Mathematics Extension 2}{94/100}
-\educationGrade{Physics}{95/100}
-\educationGrade{UAI}{99.25}
+    \educationGrade{Chemistry}{90/100}
+    \educationGrade{English (Advanced)}{88/100}
+    \educationGrade{Mathematics Extension 1}{97/100}
+    \educationGrade{Mathematics Extension 2}{94/100}
+    \educationGrade{Physics}{95/100}
+    \educationGrade{UAI}{99.25}
 }
 \end{education}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Licenses
+%
+% \licenseItem{name}{provider}{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Licenses}
 \begin{licenses}
-\license{Driver License}{RTA}{Class C Driver's License}
-\license{Explosives License}{Workcover NSW}{Pyrotechnician's License (Organised 
+\licenseItem{Driver License}{RTA}{Class C Driver's License}
+\licenseItem{Explosives License}{Workcover NSW}{Pyrotechnician's License (Organised 
 Public Display, Ground display fireworks, Theatrical/indoor fireworks, Aerial 
 shells up to 150 mm)}
-\license{Boat Driver's License}{NSW Maritime}{Boat Driver's License}
+\licenseItem{Boat Driver's License}{NSW Maritime}{Boat Driver's License}
 \end{licenses}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Qualifications and Training
+%
+% \qualificationItem{date}{name}{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Qualifications and Training}
 \begin{qualifications}
 
-\qualification{23 March 2011}{Leadership Training}
+\qualificationItem{23 March 2011}
+{Leadership Training}
 {Participated in an internal leadership training program facilitated by 
 \company{The Hills Shire Council}.}
 
-\qualification{28 February 2011}{Senior First Aid}
+\qualificationItem{28 February 2011}
+{Senior First Aid}
 {Statement of Attainment for fulfilling the requirements of 
 \qualificationName{HLTFA301B (Apply First Aid)} from the 
 \qualificationName{Health Training Package HLT07}.}
 
-\qualification{April 2010}{Safety Checking Electrical Appliances}
+\qualificationItem{April 2010}
+{Safety Checking Electrical Appliances}
 {TAFE Statement in \qualificationName{Safety Checking Electrical Appliances}.}
 
-\qualification{2 December 2008}{Responsible Service of Alcohol}
+\qualificationItem{2 December 2008}
+{Responsible Service of Alcohol}
 {Statement of Attainment for fulfilling the requirements of 
 \qualificationName{THHBFB09B (Provide Responsible Service of Alcohol)} in 
 partial completion of the \qualificationName{Certificate II in Hospitality 
 (Operations)} qualification.}
 
-\qualification{26 February 2008}{Turning Shoppers into Buyers}
+\qualificationItem{26 February 2008}
+{Turning Shoppers into Buyers}
 {Certificate of achievement for participation in the \company{Jaycar} 
 \qualificationName{Turning Shoppers into Buyers} Retail Sales Skills training.}
 
-\qualification{5 July 2007}{Defensive Driving}
+\qualificationItem{5 July 2007}
+{Defensive Driving}
 {Statement of Completion for completion of the \qualificationName{Murcotts Level
 1 Defensive Driving Program} based on the unit of competence 
 \qualificationName{TDTC197B (Drive Vehicle)} from the 

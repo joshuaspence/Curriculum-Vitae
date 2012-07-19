@@ -213,7 +213,7 @@
 
 %================================================%
 % \begin{licenses}
-% \license{name}{provider}{description}
+% \licenseItem{name}{provider}{description}
 % \end{licenses}
 %================================================%
 \newenvironment{licenses}
@@ -221,7 +221,7 @@
 \def\lwidth{0.25\textwidth}%
 \def\rwidth{0.69\textwidth}%
 %
-\newcommand\license[3]{##1 & ##3 \\}%
+\newcommand\licenseItem[3]{##1 & ##3 \\}%
 %
 \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }
@@ -230,7 +230,7 @@
 
 %================================================%
 % \begin{qualifications}
-% \qualification{date}{name}{description}
+% \qualificationItem{date}{name}{description}
 % \end{qualifications}
 %================================================%
 \newenvironment{qualifications}%
@@ -238,7 +238,7 @@
 \def\lwidth{0.20\textwidth}%
 \def\rwidth{0.74\textwidth}%
 %
-\newcommand\qualification[3]{%
+\newcommand\qualificationItem[3]{%
 \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
 & \textbf{##2} \\*
 & ##3 \\[0.5em]
