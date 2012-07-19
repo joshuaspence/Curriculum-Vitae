@@ -4,7 +4,7 @@ Vitae (CV) and my cover letter. To compile the documents, execute the command
 `build/CurriculumVitae.pdf' and `build/CoverLetter.pdf'.
 
 SUBDIRECTORIES
-	build		An auxillary directory used to build the documents.
-	ext			Contains external "library" code.
-	img			Contains the images used in the documents.
-	src			Contains the LaTeX source files.
+    build       An auxillary directory used to build the documents.
+    ext         Contains external "library" code.
+    img         Contains the images used in the documents.
+    src         Contains the LaTeX source files.
