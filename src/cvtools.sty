@@ -1,4 +1,4 @@
-%------------------------------------------------------------------------------%
+%==============================================================================%
 % cvtools.sty
 %
 % Copyright (c) 2012 by Joshua Spence.
@@ -12,7 +12,7 @@
 %~~~~~~~~~~~~~~
 % * None
 %
-%------------------------------------------------------------------------------%
+%==============================================================================%
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cvtools}[2012/07/16 v1.0.0]
@@ -163,7 +163,7 @@
 
 %================================================%
 % \begin{education}
-% \educationItem{beginYear}{endYear}{name}{institution}{\educationGrade{subject}{grade} ...}
+% \educationItem{beginYear}{endYear}{name}{institution}{\educationGrade{code}{subject}{grade} ...}
 % \end{education}
 %================================================%
 \newenvironment{education}%
@@ -171,7 +171,7 @@
 \def\lwidth{0.16\textwidth}%
 \def\rwidth{0.78\textwidth}%
 %
-\newcommand\educationGrade[2]{##1 & ##2 \\}%
+\newcommand\educationGrade[3]{\ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\}%
 %
 \newcommand\educationItem[5]{%
 % Check if we should display tools
