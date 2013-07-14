@@ -2,7 +2,7 @@
 # Configuration
 #===============================================================================
 
-OUTPUTS := cover_letter curriculum_vitae
+OUTPUTS := curriculum_vitae
 
 RUBBER ?= rubber
 ifdef FORCE
