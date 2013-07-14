@@ -15,6 +15,7 @@
                 "*.blg",
                 "*-blx.bib",
                 "*.brf",
+                "*.dvi",
                 "*.fdb_latexmk",
                 "*.glo",
                 "*.lof",
@@ -30,7 +31,8 @@
             "binary_file_patterns":
             [
                 "*.pdf",
-                "*.png"
+                "*.png",
+                "*.ps"
             ]
 		}
 	],

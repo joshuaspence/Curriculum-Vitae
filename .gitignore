@@ -4,6 +4,7 @@
 /src/*.blg
 /src/*-blx.bib
 /src/*.brf
+/src/*.dvi
 /src/*.fdb_latexmk
 /src/*.glo
 /src/*.lof
@@ -17,6 +18,7 @@
 
 # Rubber output files.
 /src/*.pdf
+/src/*.ps
 
 # Sublime Text
 /.sublime-project.sublime-workspace
