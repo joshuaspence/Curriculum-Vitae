@@ -1,0 +1,46 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+            "name": ".",
+            "folder_exclude_patterns":
+            [
+                ".git"
+            ],
+            "file_exclude_patterns":
+            [
+                "*.aux",
+                "*.bbl",
+                "*.blg",
+                "*-blx.bib",
+                "*.brf",
+                "*.fdb_latexmk",
+                "*.glo",
+                "*.lof",
+                "*.log",
+                "*.lot",
+                "*.out",
+                "*.run.xml",
+                ".sublime-project.sublime-workspace",
+                "*.synctex.gz",
+                "*.toc",
+                "*.xdy"
+            ],
+            "binary_file_patterns":
+            [
+                "*.pdf",
+                "*.png"
+            ]
+		}
+	],
+    "settings":
+    {
+        "default_line_ending": "unix",
+        "ensure_newline_at_eof_on_save": true,
+        "tab_size": 4,
+        "translate_tabs_to_spaces": true,
+        "trim_trailing_white_space_on_save": true,
+        "word_wrap": false
+    }
+}
