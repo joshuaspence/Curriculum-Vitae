@@ -17,10 +17,8 @@
 %==============================================================================%
 % Declare options
 %==============================================================================%
-\newif\if@showtools
 \newif\if@showgrades
 
-\DeclareOption{showtools}{\@showtoolstrue}
 \DeclareOption{showgrades}{\@showgradestrue}
 \DeclareOption*{\PackageWarning{cvtools}{Unknown option `\CurrentOption'}}
 
@@ -94,30 +92,14 @@
 
 %==============================================================================%
 % \begin{professionalExperience}
-% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{\professionalTool{tool} ...}
+% \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}
 % \end{professionalExperience}
 %==============================================================================%
 \newenvironment{professionalExperience}{%
     \def\lwidth{0.16\textwidth}%
     \def\rwidth{0.78\textwidth}%
     %
-    \newcommand\professionalTool[1]{\item ##1}%
-    %
     \newcommand\professionalExperienceItem[6]{%
-        % Check if we should display tools
-        \if@showtools
-            \ifstrempty{##6}{%
-                % showTools is true, but this \professionalExperienceItem has no tools to display.
-                \gdef\@shouldshowtools{0}%
-            }{%
-                % showTools is true and this \professionalExperienceItem has tools to display.
-                \gdef\@shouldshowtools{1}%
-            }%
-        \else
-            % showTools is false.
-            \gdef\@shouldshowtools{0}%
-        \fi
-        %
         % Employment period
         \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
         %
@@ -127,13 +109,6 @@
         % Job description
         & ##5%
         %
-        % Tools
-        \ifthenelse{\equal{\@shouldshowtools}{1}}{%
-            \\[1em]%
-            & \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
-                ##6%
-            \end{itemize}%
-        }{}%
         \\[1em]%
     }%
     %
@@ -154,7 +129,7 @@
     \newcommand\educationGrade[3]{\ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\}%
     %
     \newcommand\educationItem[5]{%
-        % Check if we should display tools
+        % Check if we should display grades.
         \if@showgrades%
             \ifstrempty{##5}{%
                 % showGrades is true, but this \educationItem has no grades to display.
