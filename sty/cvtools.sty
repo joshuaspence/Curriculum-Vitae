@@ -22,6 +22,9 @@
 \newcolumntype{R}[1]{p{#1}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
 
+% http://tex.stackexchange.com/a/63756/13522
+\newcommand\multirow[1]{\smash{\parbox[t]{\lwidth}{\raggedright #1}}}
+
 
 %==============================================================================%
 % Custom formatting
@@ -188,10 +191,7 @@
     \def\rwidth{0.78\textwidth}%
     %
     \newcommand\achievement[3]{%
-        % http://tex.stackexchange.com/a/63756/13522
-        \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-        & \textbf{##2} \\*%
-        & ##3 \\[0.5em]%
+        \multirow{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
     }%
     %
     \begin{@longtable}%
