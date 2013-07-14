@@ -15,16 +15,6 @@
 \RequirePackage{xcolor} 			% for colours
 
 %==============================================================================%
-% Declare options
-%==============================================================================%
-\newif\if@showgrades
-
-\DeclareOption{showgrades}{\@showgradestrue}
-\DeclareOption*{\PackageWarning{cvtools}{Unknown option `\CurrentOption'}}
-
-\ProcessOptions
-
-%==============================================================================%
 % For table styling
 %==============================================================================%
 \definecolor{lightgray}{gray}{0.8}
@@ -126,23 +116,11 @@
     \def\lwidth{0.16\textwidth}%
     \def\rwidth{0.78\textwidth}%
     %
-    \newcommand\educationGrade[3]{\ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\}%
+    \newcommand\educationGrade[3]{%
+        \ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\%
+    }%
     %
     \newcommand\educationItem[5]{%
-        % Check if we should display grades.
-        \if@showgrades%
-            \ifstrempty{##5}{%
-                % showGrades is true, but this \educationItem has no grades to display.
-                \gdef\@shouldshowgrades{0}%
-            }{%
-                % showGrades is true and this \educationItem has grades to display.
-                \gdef\@shouldshowgrades{1}%
-            }%
-        \else
-            % showGrades is false.
-            \gdef\@shouldshowgrades{0}%
-        \fi
-        %
         % Education period
         \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
         %
@@ -150,12 +128,12 @@
         & \textbf{##3 (##4)}%
         %
         % Grades
-        \ifthenelse{\equal{\@shouldshowgrades}{1}}{%
+        \ifstrempty{##5}{}{%
             \\*%
             & \begin{tabularx}{\rwidth}{Xr}%
                 ##5%
             \end{tabularx}%
-        }{}%
+        }%
         \\[0.5em]%
     }%
     %
