@@ -1,0 +1,13 @@
+%==============================================================================%
+% commalist.sty
+%------------------------------------------------------------------------------%
+% Comma-separated lists. See http://tex.stackexchange.com/a/62623/13522.
+%==============================================================================%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{commalist}
+
+\RequirePackage[inline]{enumitem}
+
+\newlist{commalist}{description*}{4}
+\setlist[commalist]{itemjoin={{,}},itemjoin*={{ and}},afterlabel=\unskip{{~}}}

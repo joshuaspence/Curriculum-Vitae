@@ -1,32 +1,22 @@
 %==============================================================================%
 % cvtools.sty
-%
-% Copyright (c) 2012 by Joshua Spence.
-% All Rights Reserved.
 %------------------------------------------------------------------------------%
-% TODO
-%~~~~~~
-% * None
-%
-% KNOWN ISSUES
-%~~~~~~~~~~~~~~
-% * None
 %
 %==============================================================================%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cvtools}[2012/07/16 v1.0.0]
+\ProvidesPackage{cvtools}
 
-\RequirePackage[inline]{enumitem}	% for tweaking lists
+\RequirePackage{commalist}
 \RequirePackage{etoolbox} 			% for \ifstrempty, \ifdef
 \RequirePackage{ifthen}				% for \ifthenelse
 \RequirePackage{longtable} 			% for tables that span more than one page
 \RequirePackage{tabularx} 			% for simple column stretching
 \RequirePackage{xcolor} 			% for colours
 
-%================================================%
+%==============================================================================%
 % Declare options
-%================================================%
+%==============================================================================%
 \newif\if@showtools
 \newif\if@showgrades
 
@@ -36,236 +26,222 @@
 
 \ProcessOptions
 
-%================================================%
+%==============================================================================%
 % For table styling
-%================================================%
+%==============================================================================%
 \definecolor{lightgray}{gray}{0.8}
 \newcolumntype{L}[1]{>{\raggedleft}p{#1}}
 \newcolumntype{R}[1]{p{#1}}
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
-%------------------------------------------------%
 
-%================================================%
-% Comma-separated list
-%================================================%
-\newlist{commalist}{description*}{4}
-\setlist[commalist]{itemjoin={{,}},itemjoin*={{ and}},afterlabel=\unskip{{~}}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % Custom formatting
-%================================================%
+%==============================================================================%
 \newcommand\jobTitle[1]{\emph{#1}}
 \newcommand\company[1]{``#1''}
 \newcommand\qualificationName[1]{\emph{#1}}
 \newcommand\educationInstitute[1]{``#1''}
-%------------------------------------------------%
+\newcommand\educationalInstitution[1]{``#1''}
 
-%================================================%
+
+\newenvironment{@longtable}{%
+    \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+}{%
+    \end{longtable}%
+}
+
+%==============================================================================%
 % \begin{personalDetails}
 % \personalDetailsItem{itemName}{itemValue}
 % \personalDetailsItemWithSpace{itemName}{itemValue}
 % \end{personalDetails}
-%================================================%
-\newenvironment{personalDetails}%
-{%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
-%
-\newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
-\newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
-%
-\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{personalDetails}{%
+    \def\lwidth{0.16\textwidth}%
+    \def\rwidth{0.78\textwidth}%
+    %
+    \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+    \newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{technicalSkills}
 % \technicalSkillsItem}{itemName}{itemValues}
 % \end{technicalSkills}
-%================================================%
-\newenvironment{technicalSkills}%
-{%
-\def\lwidth{0.3\textwidth}%
-\def\rwidth{0.64\textwidth}%
-%
-\newcommand\technicalSkillsItem[2]{%
-##1 &%
-\begin{commalist} 
-##2%
-\end{commalist}.%
-% Phantom prevents the comma list from expanding to the whole row width.
-\hfill \null \\[0.5em]%
-}%
-%
-\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{technicalSkills}{%
+    \def\lwidth{0.3\textwidth}%
+    \def\rwidth{0.64\textwidth}%
+    %
+    \newcommand\technicalSkillsItem[2]{%
+        ##1 &%
+        \begin{commalist}
+            ##2%
+        \end{commalist}.%
+        % Phantom prevents the comma list from expanding to the whole row width.
+        \hfill \null \\[0.5em]%
+    }%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{professionalExperience}
 % \professionalExperienceItem{startEmploymentPeriod}{endEmploymentPeriod}{position}{company}{jobDescription}{\professionalTool{tool} ...}
 % \end{professionalExperience}
-%================================================%
-\newenvironment{professionalExperience}%
-{%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
-%
-\newcommand\professionalTool[1]{\item ##1}%
-%
-\newcommand\professionalExperienceItem[6]{%
-% Check if we should display tools
-\if@showtools
-	\ifstrempty{##6}%
-		{% showTools is true, but this \professionalExperienceItem has no tools
-		 % to display.
-			\gdef\@shouldshowtools{0}%
-		}%
-		{% showTools is true and this \professionalExperienceItem has tools to
-		 % display.
-			\gdef\@shouldshowtools{1}%
-		}%
-\else
-	% showTools is false.
-	\gdef\@shouldshowtools{0}%
-\fi
-%
-% Employment period
-\smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
-%
-% Position and company
-& \textbf{##3 (##4)}\\*%
-%
-% Job description
-& ##5%
-%
-% Tools
-\ifthenelse{\equal{\@shouldshowtools}{1}}%
-	{%
-		\\[1em]%
-		& \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
-		##6%
-		\end{itemize}%
-	}%
-	{}%
-\\[1em]%
-}%
-%
-\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{professionalExperience}{%
+    \def\lwidth{0.16\textwidth}%
+    \def\rwidth{0.78\textwidth}%
+    %
+    \newcommand\professionalTool[1]{\item ##1}%
+    %
+    \newcommand\professionalExperienceItem[6]{%
+        % Check if we should display tools
+        \if@showtools
+            \ifstrempty{##6}{%
+                % showTools is true, but this \professionalExperienceItem has no tools to display.
+                \gdef\@shouldshowtools{0}%
+            }{%
+                % showTools is true and this \professionalExperienceItem has tools to display.
+                \gdef\@shouldshowtools{1}%
+            }%
+        \else
+            % showTools is false.
+            \gdef\@shouldshowtools{0}%
+        \fi
+        %
+        % Employment period
+        \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
+        %
+        % Position and company
+        & \textbf{##3 (##4)}\\*%
+        %
+        % Job description
+        & ##5%
+        %
+        % Tools
+        \ifthenelse{\equal{\@shouldshowtools}{1}}{%
+            \\[1em]%
+            & \textbf{Tools:} \begin{itemize}[itemsep=0pt]%
+                ##6%
+            \end{itemize}%
+        }{}%
+        \\[1em]%
+    }%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{%
-\end{longtable}%
-}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{education}
 % \educationItem{beginYear}{endYear}{name}{institution}{\educationGrade{code}{subject}{grade} ...}
 % \end{education}
-%================================================%
-\newenvironment{education}%
-{%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
-%
-\newcommand\educationGrade[3]{\ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\}%
-%
-\newcommand\educationItem[5]{%
-% Check if we should display tools
-\if@showgrades%
-	\ifstrempty{##5}%
-		{% showGrades is true, but this \educationItem has no grades to display.
-			\gdef\@shouldshowgrades{0}%
-		}%
-		{% showGrades is true and this \educationItem has grades to display.
-			\gdef\@shouldshowgrades{1}%
-		}%
-\else
-	% showGrades is false.
-	\gdef\@shouldshowgrades{0}%
-\fi
-%
-% Education period
-\smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
-%
-% Name and institution
-& \textbf{##3 (##4)}%
-%
-% Grades
-\ifthenelse{\equal{\@shouldshowgrades}{1}}%
-	{%
-		\\*%
-		& \begin{tabularx}{\rwidth}{Xr}%
-		##5%
-		\end{tabularx}%
-	}%
-	{}%
-\\[0.5em]%
-}%
-%
-\begin{longtable}{L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{education}{%
+    \def\lwidth{0.16\textwidth}%
+    \def\rwidth{0.78\textwidth}%
+    %
+    \newcommand\educationGrade[3]{\ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\}%
+    %
+    \newcommand\educationItem[5]{%
+        % Check if we should display tools
+        \if@showgrades%
+            \ifstrempty{##5}{%
+                % showGrades is true, but this \educationItem has no grades to display.
+                \gdef\@shouldshowgrades{0}%
+            }{%
+                % showGrades is true and this \educationItem has grades to display.
+                \gdef\@shouldshowgrades{1}%
+            }%
+        \else
+            % showGrades is false.
+            \gdef\@shouldshowgrades{0}%
+        \fi
+        %
+        % Education period
+        \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
+        %
+        % Name and institution
+        & \textbf{##3 (##4)}%
+        %
+        % Grades
+        \ifthenelse{\equal{\@shouldshowgrades}{1}}{%
+            \\*%
+            & \begin{tabularx}{\rwidth}{Xr}%
+                ##5%
+            \end{tabularx}%
+        }{}%
+        \\[0.5em]%
+    }%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{licenses}
 % \licenseItem{name}{provider}{description}
 % \end{licenses}
-%================================================%
-\newenvironment{licenses}
-{%
-\def\lwidth{0.25\textwidth}%
-\def\rwidth{0.69\textwidth}%
-%
-\newcommand\licenseItem[3]{##1 & ##3 \\}%
-%
-\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{licenses}{%
+    \def\lwidth{0.25\textwidth}%
+    \def\rwidth{0.69\textwidth}%
+    %
+    \newcommand\licenseItem[3]{##1 & ##3 \\}%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{qualifications}
 % \qualificationItem{date}{name}{description}
 % \end{qualifications}
-%================================================%
-\newenvironment{qualifications}%
-{%
-\def\lwidth{0.20\textwidth}%
-\def\rwidth{0.74\textwidth}%
-%
-\newcommand\qualificationItem[3]{%
-\smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-& \textbf{##2} \\*%
-& ##3 \\[0.5em]%
-}%
-%
-\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{qualifications}{%
+    \def\lwidth{0.20\textwidth}%
+    \def\rwidth{0.74\textwidth}%
+    %
+    \newcommand\qualificationItem[3]{%
+        \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
+        & \textbf{##2} \\*%
+        & ##3 \\[0.5em]%
+    }%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
 
-%================================================%
+%==============================================================================%
 % \begin{achievements}
 % \achievement{date}{name}{description}
 % \end{achievements}
-%================================================%
-\newenvironment{achievements}
-{%
-\def\lwidth{0.16\textwidth}%
-\def\rwidth{0.78\textwidth}%
-%
-\newcommand\achievement[3]{%
-\smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-& \textbf{##2} \\*%
-& ##3 \\[0.5em]%
-}%
-%
-\begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+%==============================================================================%
+\newenvironment{achievements}{%
+    \def\lwidth{0.16\textwidth}%
+    \def\rwidth{0.78\textwidth}%
+    %
+    \newcommand\achievement[3]{%
+        % http://tex.stackexchange.com/a/63756/13522
+        \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
+        & \textbf{##2} \\*%
+        & ##3 \\[0.5em]%
+    }%
+    %
+    \begin{@longtable}%
+}{%
+    \end{@longtable}%
 }
-{\end{longtable}}
-%------------------------------------------------%
