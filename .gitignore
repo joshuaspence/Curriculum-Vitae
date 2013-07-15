@@ -4,7 +4,6 @@
 /src/*.blg
 /src/*-blx.bib
 /src/*.brf
-/src/*.dvi
 /src/*.fdb_latexmk
 /src/*.glo
 /src/*.lof
@@ -17,6 +16,7 @@
 /src/*.xdy
 
 # Rubber output files.
+/src/*.dvi
 /src/*.pdf
 /src/*.ps
 
