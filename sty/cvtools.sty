@@ -49,7 +49,7 @@
 %==============================================================================%
 \newenvironment{personalDetails}{%
     \def\lwidth{0.16\textwidth}%
-    \def\rwidth{0.78\textwidth}%
+    \def\rwidth{0.80\textwidth}%
     %
     \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
     %
@@ -64,8 +64,8 @@
 % \end{technicalSkills}
 %==============================================================================%
 \newenvironment{technicalSkills}{%
-    \def\lwidth{0.3\textwidth}%
-    \def\rwidth{0.64\textwidth}%
+    \def\lwidth{0.4\textwidth}%
+    \def\rwidth{0.56\textwidth}%
     %
     \newcommand\technicalSkillsItem[2]{%
         ##1 &%
@@ -87,11 +87,11 @@
 % \end{professionalExperience}
 %==============================================================================%
 \newenvironment{professionalExperience}{%
-    \def\lwidth{0.16\textwidth}%
-    \def\rwidth{0.78\textwidth}%
+    \def\lwidth{0.20\textwidth}%
+    \def\rwidth{0.76\textwidth}%
     %
     \newcommand\professionalExperienceItem[6]{%
-        \multirow{\lwidth}{##1 -- ##2} & %
+        \multirow{\lwidth}{##1 --\\##2} & %
         \textbf{##3 (##4)}\\* & %
         ##5 \\[1em]%
     }%
@@ -107,8 +107,8 @@
 % \end{education}
 %==============================================================================%
 \newenvironment{education}{%
-    \def\lwidth{0.16\textwidth}%
-    \def\rwidth{0.78\textwidth}%
+    \def\lwidth{0.14\textwidth}%
+    \def\rwidth{0.82\textwidth}%
     %
     \newcommand\educationGrade[3]{%
         \ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\%
