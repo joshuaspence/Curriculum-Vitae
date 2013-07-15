@@ -23,7 +23,7 @@
 \newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
 
 % http://tex.stackexchange.com/a/63756/13522
-\newcommand\multirow[1]{\smash{\parbox[t]{\lwidth}{\raggedright #1}}}
+\newcommand\multirow[2]{\smash{\parbox[t]{#1}{\raggedright #2}}}
 
 
 %==============================================================================%
@@ -94,7 +94,7 @@
     %
     \newcommand\professionalExperienceItem[6]{%
         % Employment period
-        \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
+        \multirow{\lwidth}{##1 -- ##2}%
         %
         % Position and company
         & \textbf{##3 (##4)}\\*%
@@ -125,7 +125,7 @@
     %
     \newcommand\educationItem[5]{%
         % Education period
-        \smash{\parbox[t]{\lwidth}{\raggedright ##1 -- ##2}}%
+        \multirow{\lwidth}{##1 -- ##2}%
         %
         % Name and institution
         & \textbf{##3 (##4)}%
@@ -171,9 +171,7 @@
     \def\rwidth{0.74\textwidth}%
     %
     \newcommand\qualificationItem[3]{%
-        \smash{\parbox[t]{\lwidth}{\raggedright ##1}}%
-        & \textbf{##2} \\*%
-        & ##3 \\[0.5em]%
+        \multirow{\lwidth}{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
     }%
     %
     \begin{@longtable}%
@@ -191,7 +189,7 @@
     \def\rwidth{0.78\textwidth}%
     %
     \newcommand\achievement[3]{%
-        \multirow{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
+        \multirow{\lwidth}{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
     }%
     %
     \begin{@longtable}%
