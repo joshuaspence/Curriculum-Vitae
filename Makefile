@@ -24,17 +24,22 @@ endif
 
 .DEFAULT: all
 .PHONY: all
-all: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).pdf) \
+all: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).dvi) \
+	 $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).pdf) \
      $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).ps)
 
 .PHONY: clean
 clean:
+	$(RUBBER) $(RUBBER_FLAGS) --clean $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT))
 	$(RUBBER) $(RUBBER_FLAGS) --clean --pdf $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT))
 	$(RUBBER) $(RUBBER_FLAGS) --clean --ps $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT))
 
 #===============================================================================
 # Rules
 #===============================================================================
+
+%.dvi: src/*.tex
+	$(RUBBER) $(RUBBER_FLAGS) $*
 
 %.pdf: src/*.tex
 	$(RUBBER) $(RUBBER_FLAGS) --pdf $*
