@@ -22,11 +22,17 @@ endif
 # Targets
 #===============================================================================
 
-.DEFAULT: all
 .PHONY: all
-all: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).dvi) \
-	 $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).pdf) \
-     $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).ps)
+all: dvi pdf ps
+
+.PHONY: dvi
+dvi: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).dvi)
+
+.PHONY: pdf
+pdf: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).pdf)
+
+.PHONY: ps
+ps: $(foreach OUTPUT,$(OUTPUTS),src/$(OUTPUT).ps)
 
 .PHONY: clean
 clean:
@@ -38,11 +44,14 @@ clean:
 # Rules
 #===============================================================================
 
-%.dvi: src/*.tex
+%.dvi: .FORCE
 	$(RUBBER) $(RUBBER_FLAGS) $*
 
-%.pdf: src/*.tex
+%.pdf: .FORCE
 	$(RUBBER) $(RUBBER_FLAGS) --pdf $*
 
-%.ps: src/*.tex
+%.ps: .FORCE
 	$(RUBBER) $(RUBBER_FLAGS) --ps $*
+
+.PHONY: .FORCE
+.FORCE:
