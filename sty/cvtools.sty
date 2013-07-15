@@ -53,7 +53,6 @@
     \def\rwidth{0.78\textwidth}%
     %
     \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
-    \newcommand\personalDetailsItemWithSpace[2]{##1 & ##2 \\[1em]}%
     %
     \begin{@longtable}%
 }{%
@@ -71,11 +70,11 @@
     %
     \newcommand\technicalSkillsItem[2]{%
         ##1 &%
-        \begin{commalist}
+        \begin{commalist}%
             ##2%
         \end{commalist}.%
         % Phantom prevents the comma list from expanding to the whole row width.
-        \hfill \null \\[0.5em]%
+        \hfill\null\\[0.5em]%
     }%
     %
     \begin{@longtable}%
@@ -93,16 +92,9 @@
     \def\rwidth{0.78\textwidth}%
     %
     \newcommand\professionalExperienceItem[6]{%
-        % Employment period
-        \multirow{\lwidth}{##1 -- ##2}%
-        %
-        % Position and company
-        & \textbf{##3 (##4)}\\*%
-        %
-        % Job description
-        & ##5%
-        %
-        \\[1em]%
+        \multirow{\lwidth}{##1 -- ##2} & %
+        \textbf{##3 (##4)}\\* & %
+        ##5 \\[1em]%
     }%
     %
     \begin{@longtable}%
@@ -124,20 +116,14 @@
     }%
     %
     \newcommand\educationItem[5]{%
-        % Education period
-        \multirow{\lwidth}{##1 -- ##2}%
-        %
-        % Name and institution
-        & \textbf{##3 (##4)}%
-        %
-        % Grades
+        \multirow{\lwidth}{##1 -- ##2} & %
+        \textbf{##3 (##4)}%
         \ifstrempty{##5}{}{%
-            \\*%
-            & \begin{tabularx}{\rwidth}{Xr}%
+            \\* & %
+            \begin{tabularx}{\rwidth}{Xr}%
                 ##5%
             \end{tabularx}%
-        }%
-        \\[0.5em]%
+        }\\[0.5em]%
     }%
     %
     \begin{@longtable}%
@@ -171,7 +157,9 @@
     \def\rwidth{0.74\textwidth}%
     %
     \newcommand\qualificationItem[3]{%
-        \multirow{\lwidth}{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
+        \multirow{\lwidth}{##1} & %
+        \textbf{##2} \\* & %
+        ##3 \\[0.5em]%
     }%
     %
     \begin{@longtable}%
@@ -189,7 +177,9 @@
     \def\rwidth{0.78\textwidth}%
     %
     \newcommand\achievement[3]{%
-        \multirow{\lwidth}{##1} & \textbf{##2} \\* & ##3 \\[0.5em]%
+        \multirow{\lwidth}{##1} & %
+        \textbf{##2} \\* & %
+        ##3 \\[0.5em]%
     }%
     %
     \begin{@longtable}%
