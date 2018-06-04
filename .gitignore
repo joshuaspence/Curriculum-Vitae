@@ -19,6 +19,3 @@
 /src/*.dvi
 /src/*.pdf
 /src/*.ps
-
-# Sublime Text
-/.sublime-project.sublime-workspace
