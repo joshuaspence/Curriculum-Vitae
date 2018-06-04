@@ -29,9 +29,9 @@ pdf: $(BUILD_DIR)/$(TARGET).pdf
 
 .PHONY: view
 view: $(BUILD_DIR)/$(TARGET).pdf
-	@$(PDF_VIEWER) $< &
+	$(PDF_VIEWER) $< &
 
 # Rules
-$(BUILD_DIR)/$(TARGET).pdf: $(SOURCE_DIR)/$(TARGET).tex $(wildcard $(SOURCE_DIR)/*.tex)
+$(BUILD_DIR)/$(TARGET).pdf: $(SOURCE_DIR)/$(TARGET).tex $(SOURCES)
 	mkdir --parents $(BUILD_DIR)
 	$(RUBBER) $(RUBBER_FLAGS) --pdf $<
