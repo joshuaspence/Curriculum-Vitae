@@ -22,7 +22,11 @@ build: pdf
 
 .PHONY: clean
 clean:
-	rm --force --recursive --verbose $(BUILD_DIR)
+	$(RUBBER) $(RUBBER_FLAGS) --clean $(SOURCE_DIR)/$(TARGET).tex
+
+.PHONY: cleanall
+cleanall:
+	$(RUBBER) $(RUBBER_FLAGS) --clean --pdf $(SOURCE_DIR)/$(TARGET).tex
 
 .PHONY: pdf
 pdf: $(BUILD_DIR)/$(TARGET).pdf
