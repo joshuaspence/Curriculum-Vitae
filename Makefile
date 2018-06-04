@@ -13,7 +13,7 @@ RUBBER_FLAGS += --maxerr -1
 ifdef QUIET
 RUBBER_FLAGS += --quiet
 endif
-RUBBER_FLAGS += --texpath sty
+RUBBER_FLAGS += --texpath $(CURDIR)/sty
 ifdef VERBOSE
 RUBBER_FLAGS += --verbose
 endif
