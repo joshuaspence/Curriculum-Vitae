@@ -1,12 +1,14 @@
 # Configuration
 BUILD_DIR  := build
 SOURCE_DIR := src
-TARGET     := curriculum_vitae
 TEXPATH    := sty
+
+SOURCES := $(wildcard $(SOURCE_DIR)/*.tex)
+TARGET  := curriculum_vitae
 
 # Executables
 PDF_VIEWER ?= evince
-RUBBER ?= rubber
+RUBBER     ?= rubber
 
 # Flags
 RUBBER_FLAGS += --into $(BUILD_DIR)
