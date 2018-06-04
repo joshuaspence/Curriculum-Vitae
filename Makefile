@@ -20,6 +20,10 @@ RUBBER_FLAGS += --warn all
 .PHONY: build
 build: pdf
 
+.PHONY: clean
+clean:
+	rm --force --recursive --verbose $(BUILD_DIR)
+
 .PHONY: pdf
 pdf: $(BUILD_DIR)/$(TARGET).pdf
 
