@@ -5,7 +5,7 @@ TARGET     := curriculum_vitae
 TEXPATH    := sty
 
 # Executables
-EVINCE ?= evince
+PDF_VIEWER ?= evince
 RUBBER ?= rubber
 
 # Flags
@@ -17,7 +17,7 @@ RUBBER_FLAGS += --warn all
 # Targets
 .PHONY: pdf
 pdf: $(BUILD_DIR)/$(TARGET).pdf
-	@$(EVINCE) $< &
+	@$(PDF_VIEWER) $< &
 
 # Rules
 $(BUILD_DIR)/$(TARGET).pdf: $(SOURCE_DIR)/$(TARGET).tex $(wildcard $(SOURCE_DIR)/*.tex)
