@@ -17,8 +17,14 @@ RUBBER_FLAGS += $(addprefix --texpath $(CURDIR)/,$(TEXPATH))
 RUBBER_FLAGS += --warn all
 
 # Targets
+.PHONY: build
+build: pdf
+
 .PHONY: pdf
 pdf: $(BUILD_DIR)/$(TARGET).pdf
+
+.PHONY: view
+view: $(BUILD_DIR)/$(TARGET).pdf
 	@$(PDF_VIEWER) $< &
 
 # Rules
