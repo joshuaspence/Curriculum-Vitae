@@ -147,23 +147,3 @@
 }{%
   \end{@longtable}%
 }
-
-%==============================================================================%
-% \begin{achievements}
-% \achievement{date}{name}{description}
-% \end{achievements}
-%==============================================================================%
-\newenvironment{achievements}{%
-  \def\lwidth{0.14\textwidth}%
-  \def\rwidth{0.82\textwidth}%
-  %
-  \newcommand\achievement[3]{%
-    \multirow{\lwidth}{##1} & %
-    \textbf{##2} \\* & %
-    ##3 \\[0.5em]%
-  }%
-  %
-  \begin{@longtable}%
-}{%
-  \end{@longtable}%
-}
