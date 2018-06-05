@@ -25,7 +25,6 @@
 % http://tex.stackexchange.com/a/63756/13522
 \newcommand\multirow[2]{\smash{\parbox[t]{#1}{\raggedright #2}}}
 
-
 %==============================================================================%
 % Custom formatting
 %==============================================================================%
@@ -34,11 +33,10 @@
 \newcommand\qualification[1]{\emph{#1}}
 \newcommand\educationalInstitution[1]{``#1''}
 
-
 \newenvironment{@longtable}{%
-    \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
+  \begin{longtable}{>{\bfseries}L{\lwidth}!{\VRule}R{\rwidth}}%
 }{%
-    \end{longtable}%
+  \end{longtable}%
 }
 
 %==============================================================================%
@@ -48,14 +46,14 @@
 % \end{personalDetails}
 %==============================================================================%
 \newenvironment{personalDetails}{%
-    \def\lwidth{0.16\textwidth}%
-    \def\rwidth{0.80\textwidth}%
-    %
-    \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.16\textwidth}%
+  \def\rwidth{0.80\textwidth}%
+  %
+  \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
 
 %==============================================================================%
@@ -64,21 +62,21 @@
 % \end{technicalSkills}
 %==============================================================================%
 \newenvironment{technicalSkills}{%
-    \def\lwidth{0.4\textwidth}%
-    \def\rwidth{0.56\textwidth}%
-    %
-    \newcommand\technicalSkillsItem[2]{%
-        ##1 &%
-        \begin{commalist}%
-            ##2%
-        \end{commalist}.%
-        % Phantom prevents the comma list from expanding to the whole row width.
-        \hfill\null\\[0.5em]%
-    }%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.4\textwidth}%
+  \def\rwidth{0.56\textwidth}%
+  %
+  \newcommand\technicalSkillsItem[2]{%
+    ##1 &%
+    \begin{commalist}%
+      ##2%
+    \end{commalist}.%
+    % Phantom prevents the comma list from expanding to the whole row width.
+    \hfill\null\\[0.5em]%
+  }%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
 
 %==============================================================================%
@@ -87,18 +85,18 @@
 % \end{professionalExperience}
 %==============================================================================%
 \newenvironment{professionalExperience}{%
-    \def\lwidth{0.20\textwidth}%
-    \def\rwidth{0.76\textwidth}%
-    %
-    \newcommand\professionalExperienceItem[6]{%
-        \multirow{\lwidth}{##1 --\\##2} & %
-        \textbf{##3 (##4)}\\* & %
-        ##5 \\[1em]%
-    }%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.20\textwidth}%
+  \def\rwidth{0.76\textwidth}%
+  %
+  \newcommand\professionalExperienceItem[6]{%
+    \multirow{\lwidth}{##1 --\\##2} & %
+    \textbf{##3 (##4)}\\* & %
+    ##5 \\[1em]%
+  }%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
 
 %==============================================================================%
@@ -107,27 +105,27 @@
 % \end{education}
 %==============================================================================%
 \newenvironment{education}{%
-    \def\lwidth{0.14\textwidth}%
-    \def\rwidth{0.82\textwidth}%
-    %
-    \newcommand\educationGrade[3]{%
-        \ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\%
-    }%
-    %
-    \newcommand\educationItem[5]{%
-        \multirow{\lwidth}{##1 -- ##2} & %
-        \textbf{##3 (##4)}%
-        \ifstrempty{##5}{}{%
-            \\* & %
-            \begin{tabularx}{\rwidth}{Xr}%
-                ##5%
-            \end{tabularx}%
-        }\\[0.5em]%
-    }%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.14\textwidth}%
+  \def\rwidth{0.82\textwidth}%
+  %
+  \newcommand\educationGrade[3]{%
+    \ifstrempty{##1}{}{\emph{##1:}} ##2 & ##3 \\%
+  }%
+  %
+  \newcommand\educationItem[5]{%
+    \multirow{\lwidth}{##1 -- ##2} & %
+    \textbf{##3 (##4)}%
+    \ifstrempty{##5}{}{%
+      \\* & %
+      \begin{tabularx}{\rwidth}{Xr}%
+        ##5%
+      \end{tabularx}%
+    }\\[0.5em]%
+  }%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
 
 %==============================================================================%
@@ -136,18 +134,18 @@
 % \end{qualifications}
 %==============================================================================%
 \newenvironment{qualifications}{%
-    \def\lwidth{0.20\textwidth}%
-    \def\rwidth{0.76\textwidth}%
-    %
-    \newcommand\qualificationItem[3]{%
-        \multirow{\lwidth}{##1} & %
-        \textbf{##2} \\* & %
-        ##3 \\[0.5em]%
-    }%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.20\textwidth}%
+  \def\rwidth{0.76\textwidth}%
+  %
+  \newcommand\qualificationItem[3]{%
+    \multirow{\lwidth}{##1} & %
+    \textbf{##2} \\* & %
+    ##3 \\[0.5em]%
+  }%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
 
 %==============================================================================%
@@ -156,16 +154,16 @@
 % \end{achievements}
 %==============================================================================%
 \newenvironment{achievements}{%
-    \def\lwidth{0.14\textwidth}%
-    \def\rwidth{0.82\textwidth}%
-    %
-    \newcommand\achievement[3]{%
-        \multirow{\lwidth}{##1} & %
-        \textbf{##2} \\* & %
-        ##3 \\[0.5em]%
-    }%
-    %
-    \begin{@longtable}%
+  \def\lwidth{0.14\textwidth}%
+  \def\rwidth{0.82\textwidth}%
+  %
+  \newcommand\achievement[3]{%
+    \multirow{\lwidth}{##1} & %
+    \textbf{##2} \\* & %
+    ##3 \\[0.5em]%
+  }%
+  %
+  \begin{@longtable}%
 }{%
-    \end{@longtable}%
+  \end{@longtable}%
 }
