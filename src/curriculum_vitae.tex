@@ -13,38 +13,24 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand{\cvsection}[2] {
+  \section*{#1}
+  \input{#2}
+}
+
 \begin{document}
 \maketitle
 
-\section*{Objective}
-\input{objective}
-
-\section*{Personal Details}
-\input{personal}
-
-\section*{Summary}
-\input{summary}
-
-\section*{Interests}
-\input{interests}
-
+\cvsection{Objective}{objective}
+\cvsection{Personal Details}{personal}
+\cvsection{Summary}{summary}
+\cvsection{Interests}{interests}
 \newpage
-\section*{Technical Skills}
-\input{skills}
-
-\section*{Professional Experience}
-\input{experience}
-
-\section*{Education}
-\input{education}
-
-\section*{Qualifications and Training}
-\input{qualifications}
-
-\section*{Awards and Achievements}
-\input{achievements}
-
-\section*{References and Referees}
-\input{references}
+\cvsection{Technical Skills}{skills}
+\cvsection{Professional Experience}{experience}
+\cvsection{Education}{education}
+\cvsection{Qualifications and Training}{qualifications}
+\cvsection{Awards and Achievements}{achievements}
+\cvsection{References and Referees}{references}
 
 \end{document}
