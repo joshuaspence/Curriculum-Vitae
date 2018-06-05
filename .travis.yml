@@ -1,7 +1,7 @@
 ---
 before_install:
   - 'sudo apt-get --quiet update'
-  - 'sudo apt-get --quiet --quiet install --no-install-recommends make rubber texlive-fonts-extra texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended'
+  - 'sudo apt-get --quiet --quiet install --no-install-recommends make rubber texlive-fonts-extra texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended texlive-full'
 script:
   - 'make build'
 
