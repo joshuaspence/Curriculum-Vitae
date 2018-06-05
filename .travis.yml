@@ -1,7 +1,7 @@
 ---
 before_install:
   - 'sudo apt-get --quiet update'
-  - 'sudo apt-get --quiet --quiet install --no-install-recommends make rubber texlive-latex-base texlive-latex-extra texlive-latex-recommended'
+  - 'sudo apt-get --quiet --quiet install --no-install-recommends latex-xcolor make rubber texlive-latex-base texlive-latex-extra texlive-latex-recommended'
 script:
   - 'make build'
 
