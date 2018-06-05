@@ -1,7 +1,7 @@
 # Configuration
 BUILD_DIR  := build
 SOURCE_DIR := src
-TEXPATH    := sty
+TEXPATH    := lib
 
 SOURCES := $(wildcard $(SOURCE_DIR)/*.tex)
 TARGET  := curriculum_vitae
