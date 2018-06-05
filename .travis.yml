@@ -10,6 +10,6 @@ deploy:
   api_key:
     secure: 'axPgWO4iWe0r1cW5ImVBng6AQpZjCDFMbDBaOyR8mHi35IbrVjAYRCkyTpNnAZkeiukSn7dLA24M1MTvOzd25XSAR1Ak5ZQvoOVlsxSopVBio1NtTR/xFx4T4P1busQwhsX4m9LHcayoKBbaKF9BlPxR/3JJMOTB2ysJHVfdbBE='
   file: 'build/curriculum_vitae.pdf'
-  skip_cleanup: true
   on:
     branch: 'master'
+  skip_cleanup: true
