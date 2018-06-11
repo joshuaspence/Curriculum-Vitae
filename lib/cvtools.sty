@@ -1,18 +1,11 @@
-%==============================================================================%
-% cvtools.sty
-%------------------------------------------------------------------------------%
-%
-%==============================================================================%
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cvtools}
 
 \RequirePackage{commalist}
-\RequirePackage{etoolbox} 			% for \ifstrempty, \ifdef
-\RequirePackage{ifthen}				% for \ifthenelse
-\RequirePackage{longtable} 			% for tables that span more than one page
-\RequirePackage{tabularx} 			% for simple column stretching
-\RequirePackage{xcolor} 			% for colours
+\RequirePackage{etoolbox}
+\RequirePackage{longtable}
+\RequirePackage{tabularx}
+\RequirePackage{xcolor}
 
 %==============================================================================%
 % For table styling
@@ -28,10 +21,10 @@
 %==============================================================================%
 % Custom formatting
 %==============================================================================%
-\newcommand\jobTitle[1]{\emph{#1}}
-\newcommand\company[1]{``#1''}
-\newcommand\qualification[1]{\emph{#1}}
+\newcommand\employer[1]{``#1''}
 \newcommand\educationalInstitution[1]{``#1''}
+\newcommand\jobTitle[1]{\emph{#1}}
+\newcommand\qualification[1]{\emph{#1}}
 
 \newenvironment{@longtable}[2]{%
   \begin{longtable}{>{\bfseries}L{#1}!{\VRule}R{#2}}%
