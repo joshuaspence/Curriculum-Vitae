@@ -6,16 +6,13 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{verbatim}
 
-% Title details.
 \title{\Huge{\textbf{Curriculum Vitae}}}
 \author{\Large{\textbf{Joshua Spence}}}
 \date{}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\cvsection}[2]{
-  \section*{#1}
-  \input{#2}
+\newcommand{\cvsection}[2]{%
+  \section*{#1}%
+  \input{#2}%
 }
 
 \begin{document}
@@ -31,5 +28,4 @@
 \cvsection{Education}{education}
 \cvsection{Qualifications and Training}{qualifications}
 \cvsection{References and Referees}{references}
-
 \end{document}
