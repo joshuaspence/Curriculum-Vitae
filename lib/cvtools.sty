@@ -41,15 +41,14 @@
 
 %==============================================================================%
 % \begin{personalDetails}
-% \personalDetailsItem{itemName}{itemValue}
-% \personalDetailsItemWithSpace{itemName}{itemValue}
+% \item{itemName}{itemValue}
 % \end{personalDetails}
 %==============================================================================%
 \newenvironment{personalDetails}{%
   \def\lwidth{0.16\textwidth}%
   \def\rwidth{0.80\textwidth}%
   %
-  \newcommand\personalDetailsItem[2]{##1 & ##2 \\}%
+  \renewcommand\item[2]{##1 & ##2 \\}%
   %
   \begin{@longtable}%
 }{%
