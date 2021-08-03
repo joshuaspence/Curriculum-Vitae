@@ -28,15 +28,19 @@ jobs:
     runs-on: 'ubuntu-latest'
     if: "github.ref == 'refs/heads/master'"
     steps:
+      - uses: 'actions/checkout@v2'
       - uses: 'actions/download-artifact@v2'
         with:
           name: 'curriculum_vitae.pdf'
-      - id: 'date'
-        run: 'echo "::set-output name=date::$(date +%Y%m%d)"'
+
+      - id: 'version'
+        run: |-
+          echo "::set-output name=date::$(date +%Y%m%d)"
+          echo "::set-output name=sha::$(git rev-parse --short HEAD)"
       - uses: 'ncipollo/release-action@v1.8.6'
         with:
           artifactErrorsFailBuild: true
           artifacts: 'curriculum_vitae.pdf'
           commit: '${{ github.sha }}'
-          tag: '${{ steps.date.outputs.date }}-${{ github.sha }}'
+          tag: '${{ steps.version.outputs.date }}-${{ steps.version.outputs.sha }}'
           token: '${{ secrets.GITHUB_TOKEN }}'
