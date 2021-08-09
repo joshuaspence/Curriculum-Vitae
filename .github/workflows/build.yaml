@@ -37,7 +37,7 @@ jobs:
         run: |-
           echo "::set-output name=date::$(date +%Y%m%d)"
           echo "::set-output name=sha::$(git rev-parse --short HEAD)"
-      - uses: 'ncipollo/release-action@v1.8.6'
+      - uses: 'ncipollo/release-action@v1.8.8'
         with:
           artifactErrorsFailBuild: true
           artifacts: 'curriculum_vitae.pdf'
