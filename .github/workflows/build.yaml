@@ -43,4 +43,3 @@ jobs:
           artifacts: 'curriculum_vitae.pdf'
           commit: '${{ github.sha }}'
           tag: '${{ steps.version.outputs.date }}-${{ steps.version.outputs.sha }}'
-          token: '${{ secrets.GITHUB_TOKEN }}'
