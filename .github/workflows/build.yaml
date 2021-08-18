@@ -12,14 +12,14 @@ jobs:
       - uses: 'actions/checkout@v2'
       - uses: 'xu-cheng/latex-action@v2'
         with:
-          root_file: 'src/curriculum_vitae.tex'
-          post_compile: 'latexmk -c src/curriculum_vitae.tex'
+          root_file: 'src/main.tex'
+          post_compile: 'latexmk -c src/main.tex'
         env:
           TEXINPUTS: './lib:./src:'
       - uses: 'actions/upload-artifact@v2'
         with:
           name: 'curriculum_vitae.pdf'
-          path: 'curriculum_vitae.pdf'
+          path: 'main.pdf'
           if-no-files-found: 'error'
 
   release:
