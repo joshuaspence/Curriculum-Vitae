@@ -13,6 +13,7 @@ jobs:
       - uses: 'xu-cheng/latex-action@v2'
         with:
           root_file: 'src/main.tex'
+          args: '-pdf -file-line-error -halt-on-error -interaction=nonstopmode'
           post_compile: 'latexmk -c src/main.tex'
         env:
           TEXINPUTS: './lib:./src:'
@@ -32,6 +33,7 @@ jobs:
       - uses: 'actions/download-artifact@v2'
         with:
           name: 'curriculum_vitae.pdf'
+      - run: 'ls .'
 
       - id: 'version'
         run: |-
