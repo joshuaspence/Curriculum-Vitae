@@ -36,7 +36,7 @@ jobs:
 
       - id: 'version'
         run: |-
-          echo "::set-output name=date::$(date +%Y%m%d)"
+          echo "::set-output name=date::$(date +%Y%m%d%H%M)"
           echo "::set-output name=sha::$(git rev-parse --short HEAD)"
       - uses: 'ncipollo/release-action@v1.8.8'
         with:
