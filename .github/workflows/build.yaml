@@ -17,7 +17,7 @@ jobs:
         env:
           TEXINPUTS: './lib:./src:'
       - run: 'mv main.pdf curriculum_vitae.pdf'
-      - uses: 'actions/upload-artifact@v2'
+      - uses: 'actions/upload-artifact@v3'
         with:
           name: 'curriculum_vitae.pdf'
           path: 'curriculum_vitae.pdf'
