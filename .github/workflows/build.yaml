@@ -27,7 +27,8 @@ jobs:
     needs:
       - 'latex'
     runs-on: 'ubuntu-latest'
-    if: "github.ref == 'refs/heads/master'"
+    if: >-
+      github.ref == 'refs/heads/master'
     steps:
       - uses: 'actions/checkout@v4'
       - uses: 'actions/download-artifact@v3'
