@@ -10,7 +10,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: 'actions/checkout@v4'
-      - uses: 'xu-cheng/latex-action@v2'
+      - uses: 'xu-cheng/latex-action@v3'
         with:
           root_file: 'src/main.tex'
           post_compile: 'latexmk -c src/main.tex'
