@@ -1,13 +1,14 @@
-personal_ws-1.1 en 36 
 ACM
 Akamai
 Ansible
+balancers
 CDN
 CloudFormation
 CloudFront
 CloudWatch
-ELB
+codebase
 ElastiCache
+ELB
 Fastly
 Filebeat
 GitLab
@@ -15,8 +16,8 @@ Golang
 Grafana
 HAProxy
 IAM
-KMS
 Kibana
+KMS
 Kubernetes
 LinkedIn
 Logstash
@@ -24,14 +25,12 @@ Memcache
 Nginx
 Observability
 Phabricator
+scalable
+SignalFX
 SNS
+Splunk
 SQS
 SRE
 SSM
-SignalFX
-Splunk
 Terraform
 VPC
-balancers
-codebase
-scalable

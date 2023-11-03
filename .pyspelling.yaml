@@ -1,0 +1,18 @@
+---
+matrix:
+  - name: 'LaTeX'
+    aspell:
+      lang: 'en'
+      master: 'en_AU'
+      mode: 'tex'
+
+      add-tex-command:
+        - 'cvsection Pp'
+        - 'employer p'
+        - 'githubContributions pp'
+        - 'professionalExperienceItem PPPpP'
+    dictionary:
+      wordlists:
+        - 'dictionary.txt'
+    sources:
+      - '**/*.tex'
