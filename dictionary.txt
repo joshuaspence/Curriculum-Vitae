@@ -22,8 +22,9 @@ Kubernetes
 LinkedIn
 Logstash
 Memcache
+microservices
 Nginx
-Observability
+observability
 Phabricator
 scalable
 SignalFX
