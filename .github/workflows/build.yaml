@@ -37,8 +37,8 @@ jobs:
 
       - id: 'version'
         run: |-
-          echo "::set-output name=date::$(date +%Y%m%d%H%M)"
-          echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+          echo "date=$(date +%Y%m%d%H%M)" >> "${GITHUB_OUTPUT}"
+          echo "sha=$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
       - uses: 'ncipollo/release-action@v1.14.0'
         with:
           artifactErrorsFailBuild: true
