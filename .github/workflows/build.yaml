@@ -39,7 +39,7 @@ jobs:
         run: |-
           echo "date=$(date +%Y%m%d%H%M)" >> "${GITHUB_OUTPUT}"
           echo "sha=$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
-      - uses: 'ncipollo/release-action@v1.14.0'
+      - uses: 'ncipollo/release-action@v1.15.0'
         with:
           artifactErrorsFailBuild: true
           artifacts: 'curriculum_vitae.pdf'
